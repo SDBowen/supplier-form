@@ -1,15 +1,101 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Supplier Form</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Page Title</title>
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
 </head>
+
 <body>
-    <h1>Supplier Form</h1>
-    
+    <form>
+
+        <header>
+            <h2>Supplier Setup/Change Request</h2>
+            <div> </div>
+        </header>
+
+        <div>
+            <label>
+                Request Type
+            </label>
+            <div>
+                <select class="RequestType" name="RequestType" tabindex="1">
+                    <option value="Update">Update Supplier Request</option>
+                    <option value="New">New Supplier Request</option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <label>Supplier Number</label>
+            <div>
+                <input name="SupplierNumber" type="number" tabindex="2">
+            </div>
+        </div>
+
+        <div>
+            <label>Supplier Name</label>
+            <div>
+                <input name="SupplierName" type="text" tabindex="3">
+            </div>
+        </div>
+
+        <div>
+            <label>
+                Change Type
+            </label>
+            <div>
+                <select name="ChangeType" class="ChangeType" tabindex="4">
+                    <option value="Active Status">Active Status</option>
+                    <option value="Supplier Type">Supplier Type</option>
+                    <option value="Name Change">Name Change</option>
+                    <option value="Remit Address">Remit Address</option>
+                    <option value="Payment Terms">Payment Terms</option>
+                    <option value="Payment Type">Payment Type</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <label>New Data</label>
+            <div>
+                <input name="NewData" type="text" class="NewData" tabindex="5">
+            </div>
+        </div>
+
+        <div>
+            <label>
+                Comments
+            </label>
+
+            <div>
+                <textarea name="Comments" spellcheck="true" rows="3" cols="10" tabindex="6"></textarea>
+            </div>
+        </div>
+
+        <div>
+            <fieldset>
+                <legend>
+                    One-time Supplier
+                </legend>
+                <div>
+                    <div>
+                        <input name="OneTime" type="checkbox" value="OneTime" tabindex="7">
+                        <label></label>
+                    </div>
+            </fieldset>
+            </div>
+
+            <div>
+                <div>
+                    <input name="submit" type="button" value="Submit">
+                </div>
+            </div>
+
+    </form>
 </body>
+
 </html>
