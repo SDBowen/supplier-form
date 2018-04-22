@@ -1,68 +1,79 @@
 <script type="text/javascript" src="/_layouts/15/sp.runtime.js"></script> 
 <script type="text/javascript" src="/_layouts/15/sp.js"></script> 
 <script type="text/javascript" src="/_layouts/15/SP.DocumentManagement.js"></script>
+<script src="../SiteAssets/jquery-3.3.1.min.js"></script>
 <script language="javascript" type="text/javascript">
 
-
-// SP library name
-const LIBRARY = 'test-library';
-// Data for Document Set creation
-let requestNumber = 'WC1009',
-    requestType = '',
-    requestProperties = {
-        'Supplier Number:': '123456',
-        'Supplier Name:': 'Steel W',
-        'Change Type:': 'Payment Terms',
-        //'New Data': 'N45',
-        'Comments:': 'This is only a test.'
-    };
-    
-
-let createDocumentSet = function (libraryName, docSetName, docSetProperties) {
-
-    // Get user client context, web, and library object.
-    var clientContext = new SP.ClientContext.get_current();  
-    var web = clientContext.get_web(); 
-    var list = web.get_lists().getByTitle(libraryName);
-    // Load library object
-    clientContext.load(list);
-    // Get the root folder of the library and load it  
-    var rootFolder = list.get_rootFolder();  
-    clientContext.load(rootFolder);
-    // Get Document Set ID and load it 
-    var docSetContentTypeID = "0x0120D520";  
-    docSetContentType = clientContext.get_site().get_rootWeb().get_contentTypes().getById(docSetContentTypeID);  
-    clientContext.load(docSetContentType);
-    
-    clientContext.executeQueryAsync(function () {
-        // Create new Document Set
-        SP.DocumentSet.DocumentSet.create(clientContext, rootFolder, docSetName, docSetContentType.get_id());
-        // Get Document Set metadata
-        var docSetFolder = web.getFolderByServerRelativeUrl(rootFolder.get_serverRelativeUrl() + '/' + docSetName);
-        var docSetFolderItem = docSetFolder.get_listItemAllFields();
-        // Update metadata
-        if (docSetContentType != null) {
-            for (var property in docSetProperties) {
-                if (docSetProperties.hasOwnProperty(property) === true) {
-                    docSetFolderItem.set_item(property, docSetProperties[property]);
-                }
-            }
-        }
-        docSetFolderItem.update();
-        clientContext.load(docSetFolderItem);
-        clientContext.executeQueryAsync(function () {
-            console.log('success: ' + docSetFolderItem);
-        }, console.log('fail'));
-    },
-    console.log('fail'));
+var webUrl = window.location.protocol + "//" + window.location.host + _spPageContextInfo.webServerRelativeUrl;
  
+var createDocSet = function(listName, folderName, folderContentTypeId){
+    var listUrl = webUrl + "/" + listName;
+    var folderPayload = {
+        'Title' : folderName,
+        'Path' : listUrl
+    };
+ 
+    //Create Folder resource
+    return $.ajax({
+        url: webUrl + "/_vti_bin/listdata.svc/" + listName,
+        method: "POST",
+        contentType: "application/json;odata=verbose",
+        data: JSON.stringify(folderPayload),
+        headers: {
+            "Accept": "application/json;odata=verbose",
+            "Slug": listUrl + "/" + folderName + "|" + folderContentTypeId
+        }
+    });
+    console.log('createDocSet successful');    
 };
 
-window.onload = function() {
-    document.getElementsByClassName('supplierSubmit').onclick = function() {
-        console.log("Fire");
-        createDocumentSet(LIBRARY, requestNumber, requestProperties);
+var update = function (list, item, type) {
+    var eTag = item.eTag;
+    delete item.eTag;
+    //You may need to escape the list name when setting the __metadata property "type".
+    if(type != undefined){
+        item["__metadata"] = {"type": type};
+    }else{
+        item["__metadata"] = {"type": "SP.Data." + list + "ListItem"};
     }
-}
 
+    return $.ajax({
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json;odata=verbose",
+            "Accept": "application/json;odata=verbose",
+            "X-RequestDigest": document.getElementById("__REQUESTDIGEST").value,
+            "X-HTTP-Method": "MERGE",
+            "If-Match": '"' + eTag + '"'
+        },
+        data: JSON.stringify(item),
+        url: webUrl + "/_api/web/lists/getbytitle('" + list + "')/items(" + item.Id + ")"
+    });
+};
+
+var createDocSetObject = function(title, item){
+    var list = 'Testlibrary';
+    var defer = $.Deferred();
+    //Your list name, the title of the Document Set, and the Document Set's content type 
+    createDocSet(list, title, '0x0120D5200071CDBB135BE6D34DA23663FEF2981EA2').then(function(response){
+        var folder = response.d;
+        //console.log('folder: ' + JSON.stringify(folder));        
+        //Make sure to get the eTag version by pulling off the leading info
+        item.Id = folder.Id; 
+        item.eTag = folder.__metadata.etag.split('\"')[1].toString();
+        var type = "SP.Data." + list + "Item";
+        update(list, item, type).then(function(response2){
+            //Formulate your response to the calling funciton
+            var result = console.log('Success!');
+            defer.resolve(result);
+        }, function(error){
+            defer.reject(error);
+        });
+    }, function(error){
+        defer.reject(error);
+    });
+    return defer.promise;
+};
 </script>
+
+createDocSetObject('TestDoc15', {'One_x0020_Time_x0020_Supplier': 'testing entry', 'Supplier_x0020_Name_x003A__x002d_test': 'Steel w'});
