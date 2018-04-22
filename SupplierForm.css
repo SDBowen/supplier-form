@@ -1,0 +1,98 @@
+<style type="text/css">
+
+.container-supplier header {
+  margin: 0 0 20px 0;
+}
+.container-supplier header div {
+  font-size: 90%;
+  color: #999;
+}
+.container-supplier header h2 {
+  margin: 0 0 5px 0;
+}
+.container-supplier > div {
+  clear: both;
+  overflow: hidden;
+  padding: 1px;
+  margin: 0 0 10px 0;
+}
+.container-supplier > div > fieldset > div > div {
+  margin: 0 0 5px 0;
+}
+.container-supplier > div > label,
+.container-supplier legend {
+  width: 25%;
+  float: left;
+  padding-right: 10px;
+}
+.container-supplier > div > div,
+.container-supplier > div > fieldset > div {
+  width: 75%;
+  float: right;
+}
+.container-supplier > div > fieldset label {
+  font-size: 90%;
+}
+.container-supplier fieldset {
+  border: 0;
+  padding: 0;
+}
+
+.container-supplier input[type='text'],
+.container-supplier input[type='email'],
+.container-supplier input[type='url'],
+.container-supplier input[type='password'],
+.container-supplier textarea {
+  width: 50%;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+.container-supplier input[type='text'],
+.container-supplier input[type='email'],
+.container-supplier input[type='url'],
+.container-supplier input[type='password'] {
+  width: 50%;
+}
+.container-supplier input[type='text']:focus,
+.container-supplier input[type='email']:focus,
+.container-supplier input[type='url']:focus,
+.container-supplier input[type='password']:focus,
+.container-supplier textarea:focus {
+  outline: 0;
+  border-color: #4697e4;
+}
+
+@media (max-width: 600px) {
+  .container-supplier > div {
+    margin: 0 0 15px 0;
+  }
+  .container-supplier > div > label,
+  .container-supplier legend {
+    width: 100%;
+    float: none;
+    margin: 0 0 5px 0;
+  }
+  .container-supplier > div > div,
+  .container-supplier > div > fieldset > div {
+    width: 100%;
+    float: none;
+  }
+  .container-supplier input[type='text'],
+  .container-supplier input[type='email'],
+  .container-supplier input[type='url'],
+  .container-supplier input[type='password'],
+  .container-supplier textarea,
+  .container-supplier select {
+    width: 100%;
+  }
+}
+@media (min-width: 1200px) {
+  .container-supplier > div > label,
+  .container-supplier legend {
+    text-align: right;
+  }
+}
+
+</style>
