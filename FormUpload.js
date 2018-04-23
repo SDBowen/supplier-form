@@ -23,9 +23,13 @@ function uploadDocument() {
     function addItem(buffer, fileName) {
         var call = uploadDocument(buffer, fileName);
         call.done(function (data, textStatus, jqXHR) {
-            var call2 = getItem(data.d);
-            call2.done(function (data, textStatus, jqXHR) {
+            //console.log('call1 data return: ' + JSON.stringify(data))
+                //console.log('call2 data returns: ' + JSON.stringify(data))
                 var item = data.d;
+                console.log('item: ' + JSON.stringify(item.ListItemAllFields));
+                console.log('Id: ' + JSON.stringify(item.ListItemAllFields.Id));
+                console.log(item.ListItemAllFields.Id);
+                console.log(item.ListItemAllFields.__metadata.etag);
                 var call3 = updateItemFields(item);
                 call3.done(function (data, textStatus, jqXHR) {
                     var div = jQuery("#message");
@@ -34,10 +38,6 @@ function uploadDocument() {
                 call3.fail(function (jqXHR, textStatus, errorThrown) {
                     failHandler(jqXHR, textStatus, errorThrown);
                 });
-            });
-            call2.fail(function (jqXHR, textStatus, errorThrown) {
-                failHandler(jqXHR, textStatus, errorThrown);
-            });
         });
         call.fail(function (jqXHR, textStatus, errorThrown) {
             failHandler(jqXHR, textStatus, errorThrown);
@@ -46,7 +46,7 @@ function uploadDocument() {
 
     function uploadDocument(buffer, fileName) {
         var url = String.format(
-            "{0}/_api/Web/Lists/getByTitle('Testlibrary')/RootFolder/Files/Add(url='{1}', overwrite=true)",
+            "{0}/_api/Web/Lists/getByTitle('Testlibrary')/RootFolder/Files/Add(url='{1}', overwrite=true)?$expand=ListItemAllFields",
             _spPageContextInfo.webAbsoluteUrl, fileName);
         var call = jQuery.ajax({
             url: url,
@@ -63,25 +63,13 @@ function uploadDocument() {
         return call;
     }
 
-    function getItem(file) {
-        var call = jQuery.ajax({
-            url: file.ListItemAllFields.__deferred.uri,
-            type: "GET",
-            dataType: "json",
-            headers: {
-                Accept: "application/json;odata=verbose"
-            }
-        });
-
-        return call;
-    }
-
     function updateItemFields(item) {
-        var now = new Date();
         var call = jQuery.ajax({
+        
+
             url: _spPageContextInfo.webAbsoluteUrl +
                 "/_api/Web/Lists/getByTitle('Testlibrary')/Items(" +
-                item.Id + ")",
+                item.ListItemAllFields.Id + ")",
             type: "POST",
             data: JSON.stringify({
                 "__metadata": { type: "SP.Data.TestlibraryItem" },
@@ -91,7 +79,7 @@ function uploadDocument() {
                 Accept: "application/json;odata=verbose",
                 "Content-Type": "application/json;odata=verbose",
                 "X-RequestDigest": jQuery("#__REQUESTDIGEST").val(),
-                "IF-MATCH": item.__metadata.etag,
+                "IF-MATCH": '"' + item.ListItemAllFields.__metadata.etag.split('\"')[1].toString() + '"',
                 "X-Http-Method": "MERGE"
             }
         });
@@ -106,9 +94,3 @@ function uploadDocument() {
     }
 }
 //</script>
-
-<div class="container-supplier">
-<input id="uploadInput" type="file"/><br />
-<input id="displayName" type="text" value="Enter a unique name" /><br />
-<input id="addFileButton" type="button" value="Upload" onclick="uploadDocument()"/>    
-</div>
