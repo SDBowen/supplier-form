@@ -1,162 +1,114 @@
-'use strict';
-
-var appWebUrl, hostWebUrl;
-
-jQuery(document).ready(function () {
-
-    // Check for FileReader API (HTML5) support.
+//<script src="../SiteAssets/jquery-3.3.1.min.js"></script>
+//<script language="javascript" type="text/javascript">
+function uploadDocument() {
     if (!window.FileReader) {
-        alert('This browser does not support the FileReader API.');
+        alert("This browser does not support the HTML5 File APIs");
+        return;
     }
 
-    // Get the add-in web and host web URLs.
-    appWebUrl = decodeURIComponent(getQueryStringParameter("SPAppWebUrl"));
-    hostWebUrl = decodeURIComponent(getQueryStringParameter("SPHostUrl"));
-});
+    var element = document.getElementById("uploadInput");
+    var file = element.files[0];
+    var parts = element.value.split("\\");
+    var fileName = parts[parts.length - 1];
 
-// Upload the file.
-// You can upload files up to 2 GB with the REST API.
-function uploadFile() {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        addItem(e.target.result, fileName);
+    }
+    reader.onerror = function (e) {
+        alert(e.target.error);
+    }
+    reader.readAsArrayBuffer(file);
 
-    // Define the folder path for this example.
-    var serverRelativeUrlToFolder = '/Testlibrary';
-
-    // Get test values from the file input and text input page controls.
-    // The display name must be unique every time you run the example.
-    var fileInput = jQuery('#getFile');
-    var newName = jQuery('#displayName').val();
-
-    // Initiate method calls using jQuery promises.
-    // Get the local file as an array buffer.
-    var getFile = getFileBuffer();
-    getFile.done(function (arrayBuffer) {
-
-        // Add the file to the SharePoint folder.
-        var addFile = addFileToFolder(arrayBuffer);
-        addFile.done(function (file, status, xhr) {
-
-            // Get the list item that corresponds to the uploaded file.
-            var getItem = getListItem(file.d.ListItemAllFields.__deferred.uri);
-            getItem.done(function (listItem, status, xhr) {
-
-                // Change the display name and title of the list item.
-                var changeItem = updateListItem(listItem.d.__metadata);
-                changeItem.done(function (data, status, xhr) {
-                    alert('file uploaded and updated');
+    function addItem(buffer, fileName) {
+        var call = uploadDocument(buffer, fileName);
+        call.done(function (data, textStatus, jqXHR) {
+            var call2 = getItem(data.d);
+            call2.done(function (data, textStatus, jqXHR) {
+                var item = data.d;
+                var call3 = updateItemFields(item);
+                call3.done(function (data, textStatus, jqXHR) {
+                    var div = jQuery("#message");
+                    div.text("Item added");
                 });
-                changeItem.fail(onError);
+                call3.fail(function (jqXHR, textStatus, errorThrown) {
+                    failHandler(jqXHR, textStatus, errorThrown);
+                });
             });
-            getItem.fail(onError);
+            call2.fail(function (jqXHR, textStatus, errorThrown) {
+                failHandler(jqXHR, textStatus, errorThrown);
+            });
         });
-        addFile.fail(onError);
-    });
-    getFile.fail(onError);
-
-    // Get the local file as an array buffer.
-    function getFileBuffer() {
-        var deferred = jQuery.Deferred();
-        var reader = new FileReader();
-        reader.onloadend = function (e) {
-            deferred.resolve(e.target.result);
-        }
-        reader.onerror = function (e) {
-            deferred.reject(e.target.error);
-        }
-        reader.readAsArrayBuffer(fileInput[0].files[0]);
-        return deferred.promise();
+        call.fail(function (jqXHR, textStatus, errorThrown) {
+            failHandler(jqXHR, textStatus, errorThrown);
+        });
     }
 
-    // Add the file to the file collection in the Shared Documents folder.
-    function addFileToFolder(arrayBuffer) {
-
-        // Get the file name from the file input control on the page.
-        var parts = fileInput[0].value.split('\\');
-        var fileName = parts[parts.length - 1];
-
-        // Construct the endpoint.
-        var fileCollectionEndpoint = String.format(
-            "{0}/_api/sp.appcontextsite(@target)/web/getfolderbyserverrelativeurl('{1}')/files" +
-            "/add(overwrite=true, url='{2}')?@target='{3}'",
-            appWebUrl, serverRelativeUrlToFolder, fileName, hostWebUrl);
-
-        // Send the request and return the response.
-        // This call returns the SharePoint file.
-        return jQuery.ajax({
-            url: fileCollectionEndpoint,
+    function uploadDocument(buffer, fileName) {
+        var url = String.format(
+            "{0}/_api/Web/Lists/getByTitle('Testlibrary')/RootFolder/Files/Add(url='{1}', overwrite=true)",
+            _spPageContextInfo.webAbsoluteUrl, fileName);
+        var call = jQuery.ajax({
+            url: url,
             type: "POST",
-            data: arrayBuffer,
+            data: buffer,
             processData: false,
             headers: {
-                "accept": "application/json;odata=verbose",
+                Accept: "application/json;odata=verbose",
                 "X-RequestDigest": jQuery("#__REQUESTDIGEST").val(),
-                "content-length": arrayBuffer.byteLength
+                //"Content-Length": buffer.byteLength
             }
         });
+
+        return call;
     }
 
-    // Get the list item that corresponds to the file by calling the file's ListItemAllFields property.
-    function getListItem(fileListItemUri) {
-
-        // Construct the endpoint.
-        // The list item URI uses the host web, but the cross-domain call is sent to the
-        // add-in web and specifies the host web as the context site.
-        fileListItemUri = fileListItemUri.replace(hostWebUrl, '{0}');
-        fileListItemUri = fileListItemUri.replace('_api/Web', '_api/sp.appcontextsite(@target)/web');
-
-        var listItemAllFieldsEndpoint = String.format(fileListItemUri + "?@target='{1}'",
-            appWebUrl, hostWebUrl);
-
-        // Send the request and return the response.
-        return jQuery.ajax({
-            url: listItemAllFieldsEndpoint,
+    function getItem(file) {
+        var call = jQuery.ajax({
+            url: file.ListItemAllFields.__deferred.uri,
             type: "GET",
-            headers: { "accept": "application/json;odata=verbose" }
-        });
-    }
-
-    // Change the display name and title of the list item.
-    function updateListItem(itemMetadata) {
-
-        // Construct the endpoint.
-        // Specify the host web as the context site.
-        var listItemUri = itemMetadata.uri.replace('_api/Web', '_api/sp.appcontextsite(@target)/web');
-        var listItemEndpoint = String.format(listItemUri + "?@target='{0}'", hostWebUrl);
-
-        // Define the list item changes. Use the FileLeafRef property to change the display name. 
-        // For simplicity, also use the name as the title.
-        // The example gets the list item type from the item's metadata, but you can also get it from the
-        // ListItemEntityTypeFullName property of the list.
-        var body = String.format("{{'__metadata':{{'type':'{0}'}},'FileLeafRef':'{1}','Title':'{2}'}}",
-            itemMetadata.type, newName, newName);
-
-        // Send the request and return the promise.
-        // This call does not return response content from the server.
-        return jQuery.ajax({
-            url: listItemEndpoint,
-            type: "POST",
-            data: body,
+            dataType: "json",
             headers: {
-                "X-RequestDigest": jQuery("#__REQUESTDIGEST").val(),
-                "content-type": "application/json;odata=verbose",
-                "content-length": body.length,
-                "IF-MATCH": itemMetadata.etag,
-                "X-HTTP-Method": "MERGE"
+                Accept: "application/json;odata=verbose"
             }
         });
+
+        return call;
+    }
+
+    function updateItemFields(item) {
+        var now = new Date();
+        var call = jQuery.ajax({
+            url: _spPageContextInfo.webAbsoluteUrl +
+                "/_api/Web/Lists/getByTitle('Testlibrary')/Items(" +
+                item.Id + ")",
+            type: "POST",
+            data: JSON.stringify({
+                "__metadata": { type: "SP.Data.TestlibraryItem" },
+                Title: 'Testing Upload'
+            }),
+            headers: {
+                Accept: "application/json;odata=verbose",
+                "Content-Type": "application/json;odata=verbose",
+                "X-RequestDigest": jQuery("#__REQUESTDIGEST").val(),
+                "IF-MATCH": item.__metadata.etag,
+                "X-Http-Method": "MERGE"
+            }
+        });
+
+        return call;
+    }
+
+    function failHandler(jqXHR, textStatus, errorThrown) {
+        var response = JSON.parse(jqXHR.responseText);
+        var message = response ? response.error.message.value : textStatus;
+        alert("Call failed. Error: " + message);
     }
 }
+//</script>
 
-// Display error messages. 
-function onError(error) {
-    alert(error.responseText);
-}
-
-// Get parameters from the query string.
-// For production purposes you may want to use a library to handle the query string.
-function getQueryStringParameter(paramToRetrieve) {
-    var params = document.URL.split("?")[1].split("&amp;");
-    for (var i = 0; i < params.length; i = i + 1) {
-        var singleParam = params[i].split("=");
-        if (singleParam[0] == paramToRetrieve) return singleParam[1];
-    }
-}
+<div class="container-supplier">
+<input id="uploadInput" type="file"/><br />
+<input id="displayName" type="text" value="Enter a unique name" /><br />
+<input id="addFileButton" type="button" value="Upload" onclick="uploadDocument()"/>    
+</div>
