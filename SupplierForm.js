@@ -1,8 +1,4 @@
-<script type="text/javascript" src="/_layouts/15/sp.runtime.js"></script> 
-<script type="text/javascript" src="/_layouts/15/sp.js"></script> 
-<script type="text/javascript" src="/_layouts/15/SP.DocumentManagement.js"></script>
-<script src="../SiteAssets/jquery-3.3.1.min.js"></script>
-<script language="javascript" type="text/javascript">
+//<script language="javascript" type="text/javascript">
 
 var webUrl = window.location.protocol + "//" + window.location.host + _spPageContextInfo.webServerRelativeUrl;
  
@@ -74,6 +70,6 @@ var createDocSetObject = function(title, item){
     });
     return defer.promise;
 };
-</script>
+//</script>
 
-createDocSetObject('TestDoc15', {'One_x0020_Time_x0020_Supplier': 'testing entry', 'Supplier_x0020_Name_x003A__x002d_test': 'Steel w'});
+//createDocSetObject('TestDoc15', {'One_x0020_Time_x0020_Supplier': 'testing entry', 'Supplier_x0020_Name_x003A__x002d_test': 'Steel w'});
