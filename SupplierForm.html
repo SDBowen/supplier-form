@@ -9,7 +9,7 @@
             Request Type
         </label>
         <div>
-            <select class="RequestType" name="RequestType" tabindex="1">
+            <select class="requestType" name="requestType" tabindex="1">
                 <option value="Update">Update Supplier Request</option>
                 <option value="New">New Supplier Request</option>
             </select>
@@ -19,14 +19,14 @@
     <div>
         <label>Supplier Number</label>
         <div>
-            <input name="SupplierNumber" type="number" tabindex="2">
+            <input class="supplierNumber" name="supplierNumber" type="number" tabindex="2">
         </div>
     </div>
 
     <div>
         <label>Supplier Name</label>
         <div>
-            <input name="SupplierName" type="text" tabindex="3">
+            <input class="supplierName" name="supplierName" type="text" tabindex="3">
         </div>
     </div>
 
@@ -35,7 +35,7 @@
             Change Type
         </label>
         <div>
-            <select name="ChangeType" class="ChangeType" tabindex="4">
+            <select class="updateType" name="updateType" class="updateType" tabindex="4">
                 <option value="Active Status">Active Status</option>
                 <option value="Supplier Type">Supplier Type</option>
                 <option value="Name Change">Name Change</option>
@@ -50,7 +50,7 @@
     <div>
         <label>New Data</label>
         <div>
-            <input name="NewData" type="text" class="NewData" tabindex="5">
+            <input name="updateData" type="text" class="updateData" tabindex="5">
         </div>
     </div>
 
@@ -82,7 +82,7 @@
         </label>
 
         <div>
-            <textarea name="Comments" spellcheck="true" rows="3" cols="10" tabindex="6"></textarea>
+            <textarea class="comments" name="Comments" spellcheck="true" rows="3" cols="10" tabindex="6"></textarea>
         </div>
     </div>
 
@@ -93,19 +93,20 @@
             </legend>
             <div>
                 <div>
-                    <input name="OneTime" type="checkbox" value="OneTime" tabindex="7">
+                    <input class="oneTime" name="oneTime" type="checkbox" tabindex="7">
                     <label></label>
                 </div>
         </fieldset>
         </div>
 
         <div>
-            <input id="uploadInput" type="file"/><br />
-            <input id="displayName" type="text" value="Enter a unique name" /><br />
-            <input id="addFileButton" type="button" value="Upload" onclick="uploadDocument()"/>    
-            </div>
-        <div
-        >
+            <input id="uploadInput" type="file" />
+            <br />
+            <input id="displayName" type="text" value="Enter a unique name" />
+            <br />
+            <input id="addFileButton" type="button" value="Upload" onclick="uploadDocument()" />
+        </div>
+        <div>
             <div>
                 <input type="button" value="Submit" class="supplierSubmit">
             </div>
