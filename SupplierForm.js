@@ -9,7 +9,7 @@ var createDocSet = function(listName, folderName, folderContentTypeId){
         'Path' : listUrl
     };
  
-    //Create Folder resource
+    //Create Document Type
     return $.ajax({
         url: webUrl + "/_vti_bin/listdata.svc/" + listName,
         method: "POST",
@@ -50,11 +50,11 @@ var update = function (list, item, type) {
 var createDocSetObject = function(title, item){
     var list = 'Testlibrary';
     var defer = $.Deferred();
-    //Your list name, the title of the Document Set, and the Document Set's content type 
-    createDocSet(list, title, '0x0120D5200071CDBB135BE6D34DA23663FEF2981EA2').then(function(response){
+    // list name, Document Set title, and the Document Set's content type
+    // Data of created Document Set is returned and used to set Document Set properties 
+    createDocSet(list, title, '0x0120D520006453979D367BA7428D37D9A566C9F962').then(function(response){
         var folder = response.d;
-        //console.log('folder: ' + JSON.stringify(folder));        
-        //Make sure to get the eTag version by pulling off the leading info
+        // Save Document Set Id, eTag, and type for the update metadata call
         item.Id = folder.Id; 
         item.eTag = folder.__metadata.etag.split('\"')[1].toString();
         var type = "SP.Data." + list + "Item";
@@ -72,4 +72,4 @@ var createDocSetObject = function(title, item){
 };
 //</script>
 
-//createDocSetObject('TestDoc15', {'One_x0020_Time_x0020_Supplier': 'testing entry', 'Supplier_x0020_Name_x003A__x002d_test': 'Steel w'});
+//createDocSetObject('TestDoc16', {'Title': 'testing entry'});
