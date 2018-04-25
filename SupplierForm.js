@@ -10,30 +10,36 @@ document.querySelector('.supplierSubmit').addEventListener("click", function(){
   var requestType = document.getElementsByClassName('requestType')[0].value,
     supplierNumber = document.getElementsByClassName('supplierNumber')[0].value,
     supplierName = document.getElementsByClassName('supplierName')[0].value,
-    updateType = document.getElementsByClassName('updateType')[0].value,
-    updateData = document.getElementsByClassName('updateData')[0].value,
+    changeType = document.getElementsByClassName('changeType')[0].value,
+    changeDetail = document.getElementsByClassName('changeDetail')[0].value,
     paymentTerms = document.getElementsByClassName('paymentTerms')[0].value,
     supplierType = document.getElementsByClassName('supplierType')[0].value,
     oneTime = document.getElementsByClassName('oneTime')[0].checked,
     comments = document.getElementsByClassName('comments')[0].value;
-
+//***
+// ID increment needed
+//***
+  var docSetTitle = 'Supplier Request ' + Date.now(); 
   var itemProperties = {
     'Request Type': requestType,
     'Supplier Number': supplierNumber,
     'Supplier Name': supplierName,
-    'Update Type': updateType,
-    'Update Data': updateData,
+    'Change Type': ChangeType,
+    'Change Detail': changeDetail,
     'Payment Terms': paymentTerms,
     'Supplier Type': supplierType,
     'One-time Supplier': oneTime,
     'Comments': comments  //autoformat removes quotes
   };
 
-  createDocSetObject('DocSet005', itemProperties);
+  createDocSetObject(docSetTitle, itemProperties);
 });
 
 // Takes Document Set name and item properties to be set
 var createDocSetObject = function(title, item) {
+  //***
+  // Library that holds Document Set records
+  //***
   var list = 'Testlibrary';
   var defer = $.Deferred();
   // list name, Document Set title, and the Document Set's content type
@@ -45,6 +51,7 @@ var createDocSetObject = function(title, item) {
   ).then(
     function(response) {
       var folder = response.d;
+      console.log(JSON.stringify(folder));
       // Save Document Set Id, eTag, and type for the update metadata call
       item.Id = folder.Id;
       item.eTag = folder.__metadata.etag.split('"')[1].toString();
