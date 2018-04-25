@@ -6,27 +6,32 @@ var webUrl =
   window.location.host +
   _spPageContextInfo.webServerRelativeUrl;
 
-var requestType = document.getElementsByClassName('requestType'),
-  supplierNumber = document.getElementsByClassName('supplierNumber'),
-  supplierName = document.getElementsByClassName('supplierName'),
-  updateType = document.getElementsByClassName('updateType'),
-  updateData = document.getElementsByClassName('updateData'),
-  paymentTerms = document.getElementsByClassName('paymentTerms'),
-  supplierType = document.getElementsByClassName('supplierType'),
-  oneTime = document.getElementsByClassName('oneTime'),
-  comments = document.getElementsByClassName('comments');
+document.querySelector('.supplierSubmit').addEventListener("click", function(){
+  var requestType = document.getElementsByClassName('requestType')[0].value,
+    supplierNumber = document.getElementsByClassName('supplierNumber')[0].value,
+    supplierName = document.getElementsByClassName('supplierName')[0].value,
+    updateType = document.getElementsByClassName('updateType')[0].value,
+    updateData = document.getElementsByClassName('updateData')[0].value,
+    paymentTerms = document.getElementsByClassName('paymentTerms')[0].value,
+    supplierType = document.getElementsByClassName('supplierType')[0].value,
+    oneTime = document.getElementsByClassName('oneTime')[0].checked,
+    comments = document.getElementsByClassName('comments')[0].value;
 
-var testF = function() {
-    console.log(supplierName[0].value)
-    console.log(supplierNumber[0].value)
-    console.log(requestType[0].value)
-    console.log(updateData[0].value)
-    console.log(updateType[0].value)
-    console.log(paymentTerms[0].value)
-    console.log(supplierType[0].value)
-    console.log(oneTime[0].checked)
-    console.log(comments[0].value)
-};
+  var itemProperties = {
+    'Request Type': requestType,
+    'Supplier Number': supplierNumber,
+    'Supplier Name': supplierName,
+    'Update Type': updateType,
+    'Update Data': updateData,
+    'Payment Terms': paymentTerms,
+    'Supplier Type': supplierType,
+    'One-time Supplier': oneTime,
+    'Comments': comments  //autoformat removes quotes
+  };
+
+  createDocSetObject('DocSet005', itemProperties);
+});
+
 // Takes Document Set name and item properties to be set
 var createDocSetObject = function(title, item) {
   var list = 'Testlibrary';
@@ -115,3 +120,4 @@ var update = function(list, item, type) {
 //</script>
 
 //createDocSetObject('TestDoc16', {'Title': 'testing entry'});
+//createDocSetObject('TestDoc11', {'Title': 'This is a test title2', 'DocumentSetDescription': 'testing entry2'});
