@@ -1,3 +1,4 @@
+// Designed for use as a SharePoint WebPart
 //<script language="javascript" type="text/javascript">
 
 var webUrl =
@@ -14,22 +15,22 @@ document.querySelector('.supplierSubmit').addEventListener("click", function(){
     changeDetail = document.getElementsByClassName('changeDetail')[0].value,
     paymentTerms = document.getElementsByClassName('paymentTerms')[0].value,
     supplierType = document.getElementsByClassName('supplierType')[0].value,
-    oneTime = document.getElementsByClassName('oneTime')[0].checked,
+    oneTime = document.getElementsByClassName('oneTime')[0].checked ? 'Yes' : 'No',
     comments = document.getElementsByClassName('comments')[0].value;
 //***
 // ID increment needed
 //***
   var docSetTitle = 'Supplier Request ' + Date.now(); 
   var itemProperties = {
-    'Request Type': requestType,
-    'Supplier Number': supplierNumber,
-    'Supplier Name': supplierName,
-    'Change Type': ChangeType,
-    'Change Detail': changeDetail,
-    'Payment Terms': paymentTerms,
-    'Supplier Type': supplierType,
-    'One-time Supplier': oneTime,
-    'Comments': comments  //autoformat removes quotes
+    'Request_x0020_Type': requestType,
+    'Supplier_x0020_Number': supplierNumber,
+    'Supplier_x0020_Name': supplierName,
+    'Change_x0020_Type': changeType,
+    'Change_x0020_Detail': changeDetail,
+    'Payment_x0020_Terms': paymentTerms,
+    'Supplier_x0020_Type': supplierType,
+    'One_x002d_time_x0020_Supplier': oneTime,
+    'Request_x0020_Comments': comments  //autoformat removes quotes
   };
 
   createDocSetObject(docSetTitle, itemProperties);
@@ -51,7 +52,6 @@ var createDocSetObject = function(title, item) {
   ).then(
     function(response) {
       var folder = response.d;
-      console.log(JSON.stringify(folder));
       // Save Document Set Id, eTag, and type for the update metadata call
       item.Id = folder.Id;
       item.eTag = folder.__metadata.etag.split('"')[1].toString();
