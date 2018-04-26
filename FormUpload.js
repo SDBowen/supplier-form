@@ -23,15 +23,17 @@ function uploadDocument() {
 
   function addItem(buffer, fileName) {
     // SharePoint library to upload file
-    var library = '/sites/TeamSites/WC%20Accounting/Testlibrary/Supplier%20Request%201524627523547';
-    var library2 = 'Testlibrary'
-    var call = uploadDocument(buffer, fileName, library);
+    const spSite = '/sites/TeamSites/WC%20Accounting/'
+    var library = 'Testlibrary';
+    var docSet = 'Supplier%20Request%201524627523547'
+    var fullPath = spSite + library + '/' + docSet;
+    var call = uploadDocument(buffer, fileName, fullPath);
 
     // Get uploaded file SharePoint metadata
     call.done(function(data, textStatus, jqXHR) {
       var item = data.d;
       // Set file metadata
-      var call2 = updateItemFields(item, library2);
+      var call2 = updateItemFields(item, library);
       // Upload success
       call2.done(function(data, textStatus, jqXHR) {
         alert('Item added');
