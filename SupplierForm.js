@@ -7,7 +7,7 @@ var webUrl =
   window.location.host +
   _spPageContextInfo.webServerRelativeUrl;
 
-document.querySelector('.supplierSubmit').addEventListener("click", function(){
+document.querySelector('.supplierSubmit').addEventListener('click', function() {
   var requestType = document.getElementsByClassName('requestType')[0].value,
     supplierNumber = document.getElementsByClassName('supplierNumber')[0].value,
     supplierName = document.getElementsByClassName('supplierName')[0].value,
@@ -15,22 +15,24 @@ document.querySelector('.supplierSubmit').addEventListener("click", function(){
     changeDetail = document.getElementsByClassName('changeDetail')[0].value,
     paymentTerms = document.getElementsByClassName('paymentTerms')[0].value,
     supplierType = document.getElementsByClassName('supplierType')[0].value,
-    oneTime = document.getElementsByClassName('oneTime')[0].checked ? 'Yes' : 'No',
+    oneTime = document.getElementsByClassName('oneTime')[0].checked
+      ? 'Yes'
+      : 'No',
     comments = document.getElementsByClassName('comments')[0].value;
-//***
-// ID increment needed
-//***
-  var docSetTitle = 'Supplier Request ' + Date.now(); 
+  //***
+  // ID increment needed
+  //***
+  var docSetTitle = 'Supplier Request ' + Date.now();
   var itemProperties = {
-    'Request_x0020_Type': requestType,
-    'Supplier_x0020_Number': supplierNumber,
-    'Supplier_x0020_Name': supplierName,
-    'Change_x0020_Type': changeType,
-    'Change_x0020_Detail': changeDetail,
-    'Payment_x0020_Terms': paymentTerms,
-    'Supplier_x0020_Type': supplierType,
-    'One_x002d_time_x0020_Supplier': oneTime,
-    'Request_x0020_Comments': comments  //autoformat removes quotes
+    Request_x0020_Type: requestType,
+    Supplier_x0020_Number: supplierNumber,
+    Supplier_x0020_Name: supplierName,
+    Change_x0020_Type: changeType,
+    Change_x0020_Detail: changeDetail,
+    Payment_x0020_Terms: paymentTerms,
+    Supplier_x0020_Type: supplierType,
+    One_x002d_time_x0020_Supplier: oneTime,
+    Request_x0020_Comments: comments //autoformat removes quotes
   };
 
   createDocSetObject(docSetTitle, itemProperties);
