@@ -32,18 +32,19 @@ document.querySelector('.supplierSubmit').addEventListener('click', function() {
     Payment_x0020_Terms: paymentTerms,
     Supplier_x0020_Type: supplierType,
     One_x002d_time_x0020_Supplier: oneTime,
-    Request_x0020_Comments: comments //autoformat removes quotes
+    Request_x0020_Comments: comments 
   };
 
-  createDocSetObject(docSetTitle, itemProperties);
-});
-
-// Takes Document Set name and item properties to be set
-var createDocSetObject = function(title, item) {
   //***
   // Library that holds Document Set records
   //***
   var list = 'Testlibrary';
+
+  createDocSetObject(list, docSetTitle, itemProperties);
+});
+
+// Takes Document Set name and item properties to be set
+var createDocSetObject = function(list, title, item) {
   var defer = $.Deferred();
   // list name, Document Set title, and the Document Set's content type
   // Data of created Document Set is returned and used to set Document Set properties
