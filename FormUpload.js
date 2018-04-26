@@ -23,14 +23,15 @@ function uploadDocument() {
 
   function addItem(buffer, fileName) {
     // SharePoint library to upload file
-    var library = 'Testlibrary';
+    var library = '/sites/TeamSites/WC%20Accounting/Testlibrary/Supplier%20Request%201524627523547';
+    var library2 = 'Testlibrary'
     var call = uploadDocument(buffer, fileName, library);
 
     // Get uploaded file SharePoint metadata
     call.done(function(data, textStatus, jqXHR) {
       var item = data.d;
       // Set file metadata
-      var call2 = updateItemFields(item, library);
+      var call2 = updateItemFields(item, library2);
       // Upload success
       call2.done(function(data, textStatus, jqXHR) {
         alert('Item added');
@@ -45,13 +46,9 @@ function uploadDocument() {
   }
 
   function uploadDocument(buffer, fileName, library) {
-    var url = String.format(
-      "{0}/_api/Web/Lists/getByTitle('" +
-        library +
-        "')/RootFolder/Files/Add(url='{1}', overwrite=true)?$expand=ListItemAllFields",
-      _spPageContextInfo.webAbsoluteUrl,
-      fileName
-    );
+    var url = _spPageContextInfo.webAbsoluteUrl
+    + "/_api/web/GetFolderByServerRelativeUrl('"+library+"')/Files/add(url='" + fileName + "',overwrite=true)?$expand=ListItemAllFields";
+    
     var call = jQuery.ajax({
       url: url,
       type: 'POST',
@@ -62,7 +59,6 @@ function uploadDocument() {
         'X-RequestDigest': jQuery('#__REQUESTDIGEST').val()
       }
     });
-
     return call;
   }
 
