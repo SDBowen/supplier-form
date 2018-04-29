@@ -7,18 +7,21 @@ var webUrl =
   window.location.host +
   _spPageContextInfo.webServerRelativeUrl;
 
-document.getElementById('supplierSubmit').addEventListener('click', function() {
-  var requestType = document.getElementById('requestType')[0].value,
-    supplierNumber = document.getElementById('supplierNumber')[0].value,
-    supplierName = document.getElementById('supplierName')[0].value,
-    changeType = document.getElementById('changeType')[0].value,
-    changeDetail = document.getElementById('changeDetail')[0].value,
-    paymentTerms = document.getElementById('paymentTerms')[0].value,
-    supplierType = document.getElementById('supplierType')[0].value,
-    oneTime = document.getElementById('oneTime')[0].checked
+document.getElementById('supplierSubmit').addEventListener('click', formSubmit);
+
+
+function formSubmit() {
+  var requestType = document.getElementById('requestType').value,
+    supplierNumber = document.getElementById('supplierNumber').value,
+    supplierName = document.getElementById('supplierName').value,
+    changeType = document.getElementById('changeType').value,
+    changeDetail = document.getElementById('changeDetail').value,
+    paymentTerms = document.getElementById('paymentTerms').value,
+    supplierType = document.getElementById('supplierType').value,
+    oneTime = document.getElementById('oneTime').checked
       ? 'Yes'
       : 'No',
-    comments = document.getElementById('comments')[0].value;
+    comments = document.getElementById('comments').value;
   //***
   // ID increment needed
   //***
@@ -41,7 +44,7 @@ document.getElementById('supplierSubmit').addEventListener('click', function() {
   var list = 'Testlibrary';
 
   createDocSetObject(list, docSetTitle, itemProperties);
-});
+};
 
 // Takes Document Set name and item properties to be set
 var createDocSetObject = function(list, title, item) {
