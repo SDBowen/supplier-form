@@ -7,18 +7,18 @@ var webUrl =
   window.location.host +
   _spPageContextInfo.webServerRelativeUrl;
 
-document.querySelector('.supplierSubmit').addEventListener('click', function() {
-  var requestType = document.getElementsByClassName('requestType')[0].value,
-    supplierNumber = document.getElementsByClassName('supplierNumber')[0].value,
-    supplierName = document.getElementsByClassName('supplierName')[0].value,
-    changeType = document.getElementsByClassName('changeType')[0].value,
-    changeDetail = document.getElementsByClassName('changeDetail')[0].value,
-    paymentTerms = document.getElementsByClassName('paymentTerms')[0].value,
-    supplierType = document.getElementsByClassName('supplierType')[0].value,
-    oneTime = document.getElementsByClassName('oneTime')[0].checked
+document.getElementById('supplierSubmit').addEventListener('click', function() {
+  var requestType = document.getElementById('requestType')[0].value,
+    supplierNumber = document.getElementById('supplierNumber')[0].value,
+    supplierName = document.getElementById('supplierName')[0].value,
+    changeType = document.getElementById('changeType')[0].value,
+    changeDetail = document.getElementById('changeDetail')[0].value,
+    paymentTerms = document.getElementById('paymentTerms')[0].value,
+    supplierType = document.getElementById('supplierType')[0].value,
+    oneTime = document.getElementById('oneTime')[0].checked
       ? 'Yes'
       : 'No',
-    comments = document.getElementsByClassName('comments')[0].value;
+    comments = document.getElementById('comments')[0].value;
   //***
   // ID increment needed
   //***
