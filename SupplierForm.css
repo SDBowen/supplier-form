@@ -1,98 +1,71 @@
-<style type="text/css">
+/*<style type="text/css">*/
 
-.container-supplier header {
-  margin: 0 0 20px 0;
-}
-.container-supplier header div {
+.container-form__header, .container-form__section  {
   font-size: 90%;
   color: #999;
 }
-.container-supplier header h2 {
+.container-form__header {
   margin: 0 0 5px 0;
 }
-.container-supplier > div {
+.container-form__section {
   clear: both;
   overflow: hidden;
   padding: 1px;
   margin: 0 0 10px 0;
 }
-.container-supplier > div > fieldset > div > div {
-  margin: 0 0 5px 0;
-}
-.container-supplier > div > label,
-.container-supplier legend {
+.container-form__label {
   width: 25%;
   float: left;
-  padding-right: 10px;
-}
-.container-supplier > div > div,
-.container-supplier > div > fieldset > div {
-  width: 75%;
-  float: right;
-}
-.container-supplier > div > fieldset label {
-  font-size: 90%;
-}
-.container-supplier fieldset {
-  border: 0;
-  padding: 0;
 }
 
-.container-supplier input[type='text'],
-.container-supplier input[type='email'],
-.container-supplier input[type='url'],
-.container-supplier input[type='password'],
-.container-supplier textarea {
+.container-form input[type='text'],
+.container-form input[type='number'],
+.container-form textarea {
   width: 50%;
   border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
   border-right: 1px solid #eee;
   border-bottom: 1px solid #eee;
 }
-.container-supplier input[type='text'],
-.container-supplier input[type='email'],
-.container-supplier input[type='url'],
-.container-supplier input[type='password'] {
-  width: 50%;
+.container-form input[type='number'] {
+  width: 10%;
 }
-.container-supplier input[type='text']:focus,
-.container-supplier input[type='email']:focus,
-.container-supplier input[type='url']:focus,
-.container-supplier input[type='password']:focus,
-.container-supplier textarea:focus {
+.container-form input[type='text']:focus,
+.container-form input[type='number']:focus,
+.container-form textarea:focus {
   outline: 0;
   border-color: #4697e4;
 }
 
 @media (max-width: 600px) {
-  .container-supplier > div {
+  .container-form > div {
     margin: 0 0 15px 0;
   }
-  .container-supplier > div > label,
-  .container-supplier legend {
+  .container-form > div > label,
+  .container-form legend {
     width: 100%;
     float: none;
     margin: 0 0 5px 0;
   }
-  .container-supplier > div > div,
-  .container-supplier > div > fieldset > div {
+  .container-form > div > div,
+  .container-form > div > fieldset > div {
     width: 100%;
     float: none;
   }
-  .container-supplier input[type='text'],
-  .container-supplier input[type='email'],
-  .container-supplier input[type='url'],
-  .container-supplier input[type='password'],
-  .container-supplier textarea,
-  .container-supplier select {
+  .container-form input[type='text'],
+  .container-form input[type='email'],
+  .container-form input[type='url'],
+  .container-form input[type='password'],
+  .container-form textarea,
+  .container-form select {
     width: 100%;
   }
 }
 @media (min-width: 1200px) {
-  .container-supplier > div > label,
-  .container-supplier legend {
+  .container-form > div > label,
+  .container-form legend {
     text-align: right;
   }
 }
 
-</style>
+/*</style>*/
