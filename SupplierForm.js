@@ -1,50 +1,38 @@
 // Designed for use as a SharePoint WebPart
 //<script language="javascript" type="text/javascript">
-
 var webUrl =
   window.location.protocol +
   '//' +
   window.location.host +
   _spPageContextInfo.webServerRelativeUrl;
 
+// Add form submit event listener
 document.getElementById('supplierSubmit').addEventListener('click', formSubmit);
 
-
+// Create SharePoint Document Set on form submit
 function formSubmit() {
-  var requestType = document.getElementById('requestType').value,
-    supplierNumber = document.getElementById('supplierNumber').value,
-    supplierName = document.getElementById('supplierName').value,
-    changeType = document.getElementById('changeType').value,
-    changeDetail = document.getElementById('changeDetail').value,
-    paymentTerms = document.getElementById('paymentTerms').value,
-    supplierType = document.getElementById('supplierType').value,
-    oneTime = document.getElementById('oneTime').checked
-      ? 'Yes'
-      : 'No',
-    comments = document.getElementById('comments').value;
-  //***
-  // ID increment needed
-  //***
-  var docSetTitle = 'Supplier Request ' + Date.now();
-  var itemProperties = {
-    Request_x0020_Type: requestType,
-    Supplier_x0020_Number: supplierNumber,
-    Supplier_x0020_Name: supplierName,
-    Change_x0020_Type: changeType,
-    Change_x0020_Detail: changeDetail,
-    Payment_x0020_Terms: paymentTerms,
-    Supplier_x0020_Type: supplierType,
-    One_x002d_time_x0020_Supplier: oneTime,
-    Request_x0020_Comments: comments 
-  };
+
+  // Library that holds Document Set
+  const list = 'Testlibrary';
+  const itemProperties = getSupplierDetail();
+
+  getLastId(
+    list,
+    function(id) {
+      const docSetTitle = 'Supplier Request ' + (1000 + id);
+      createDocSetObject(list, docSetTitle, itemProperties);    
+    },
+    function(sender, args) {
+      console.log('Error:' + args.get_message());
+    }
+  );
 
   //***
   // Library that holds Document Set records
   //***
-  var list = 'Testlibrary';
 
-  createDocSetObject(list, docSetTitle, itemProperties);
-};
+  
+}
 
 // Takes Document Set name and item properties to be set
 var createDocSetObject = function(list, title, item) {
@@ -130,7 +118,59 @@ var update = function(list, item, type) {
       ')'
   });
 };
+// Get form input
+function getSupplierDetail() {
+  const requestType = document.getElementById('requestType').value,
+    supplierNumber = document.getElementById('supplierNumber').value,
+    supplierName = document.getElementById('supplierName').value,
+    changeType = document.getElementById('changeType').value,
+    changeDetail = document.getElementById('changeDetail').value,
+    paymentTerms = document.getElementById('paymentTerms').value,
+    supplierType = document.getElementById('supplierType').value,
+    oneTime = document.getElementById('oneTime').checked ? 'Yes' : 'No',
+    comments = document.getElementById('comments').value;
+
+  const itemProperties = {
+    Request_x0020_Type: requestType,
+    Supplier_x0020_Number: supplierNumber,
+    Supplier_x0020_Name: supplierName,
+    Change_x0020_Type: changeType,
+    Change_x0020_Detail: changeDetail,
+    Payment_x0020_Terms: paymentTerms,
+    Supplier_x0020_Type: supplierType,
+    One_x002d_time_x0020_Supplier: oneTime,
+    Request_x0020_Comments: comments
+  };
+
+  return itemProperties;
+}
+
+// Get ID of last folder created
+function getLastId(list, Success, Error) {
+  var caml =
+    '<View><Query><Where>' +
+    "<Eq><FieldRef Name='FSObjType' /><Value Type='int'>1</Value></Eq>" +
+    '</Where>' +
+    "<OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy>" +
+    '</Query>' +
+    "<ViewFields><FieldRef Name='ID' /></ViewFields>" +
+    '<RowLimit>1</RowLimit>' +
+    '</View>';
+  var ctx = SP.ClientContext.get_current();
+  var web = ctx.get_web();
+  var list = web.get_lists().getByTitle(list);
+  var query = new SP.CamlQuery();
+  query.set_viewXml(caml);
+  var items = list.getItems(query);
+  ctx.load(items);
+  ctx.executeQueryAsync(function() {
+    var enumerator = items.getEnumerator();
+    enumerator.moveNext();
+    var item = enumerator.get_current();
+    id = item.get_id();
+    console.log(id);
+    Success(id);
+  }, Error);
+}
 //</script>
 
-//createDocSetObject('TestDoc16', {'Title': 'testing entry'});
-//createDocSetObject('TestDoc11', {'Title': 'This is a test title2', 'DocumentSetDescription': 'testing entry2'});
