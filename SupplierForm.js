@@ -35,6 +35,60 @@
     );
   }
 
+  // Get form input
+  function getSupplierDetail() {
+    const requestType = document.getElementById('requestType').value,
+      supplierNumber = document.getElementById('supplierNumber').value,
+      supplierName = document.getElementById('supplierName').value,
+      changeType = document.getElementById('changeType').value,
+      changeDetail = document.getElementById('changeDetail').value,
+      paymentTerms = document.getElementById('paymentTerms').value,
+      supplierType = document.getElementById('supplierType').value,
+      oneTime = document.getElementById('oneTime').checked ? 'Yes' : 'No',
+      comments = document.getElementById('comments').value;
+
+    const itemProperties = {
+      Request_x0020_Type: requestType,
+      Supplier_x0020_Number: supplierNumber,
+      Supplier_x0020_Name: supplierName,
+      Change_x0020_Type: changeType,
+      Change_x0020_Detail: changeDetail,
+      Payment_x0020_Terms: paymentTerms,
+      Supplier_x0020_Type: supplierType,
+      One_x002d_time_x0020_Supplier: oneTime,
+      Request_x0020_Comments: comments
+    };
+
+    return itemProperties;
+  }
+
+  // Get ID of last folder created
+  function getLastId(library, Success, Error) {
+    const caml =
+      '<View><Query><Where>' +
+      "<Eq><FieldRef Name='FSObjType' /><Value Type='int'>1</Value></Eq>" +
+      '</Where>' +
+      "<OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy>" +
+      '</Query>' +
+      "<ViewFields><FieldRef Name='ID' /></ViewFields>" +
+      '<RowLimit>1</RowLimit>' +
+      '</View>';
+    const ctx = SP.ClientContext.get_current();
+    const web = ctx.get_web();
+    const list = web.get_lists().getByTitle(library);
+    const query = new SP.CamlQuery();
+    query.set_viewXml(caml);
+    const items = list.getItems(query);
+    ctx.load(items);
+    ctx.executeQueryAsync(function() {
+      const enumerator = items.getEnumerator();
+      enumerator.moveNext();
+      const item = enumerator.get_current();
+      const id = item.get_id();
+      Success(id);
+    }, Error);
+  }
+
   const createDocSetObject = function(list, title, item) {
     var defer = $.Deferred();
     // list name, Document Set title, and the Document Set's content type
@@ -118,58 +172,5 @@
         ')'
     });
   };
-  // Get form input
-  function getSupplierDetail() {
-    const requestType = document.getElementById('requestType').value,
-      supplierNumber = document.getElementById('supplierNumber').value,
-      supplierName = document.getElementById('supplierName').value,
-      changeType = document.getElementById('changeType').value,
-      changeDetail = document.getElementById('changeDetail').value,
-      paymentTerms = document.getElementById('paymentTerms').value,
-      supplierType = document.getElementById('supplierType').value,
-      oneTime = document.getElementById('oneTime').checked ? 'Yes' : 'No',
-      comments = document.getElementById('comments').value;
-
-    const itemProperties = {
-      Request_x0020_Type: requestType,
-      Supplier_x0020_Number: supplierNumber,
-      Supplier_x0020_Name: supplierName,
-      Change_x0020_Type: changeType,
-      Change_x0020_Detail: changeDetail,
-      Payment_x0020_Terms: paymentTerms,
-      Supplier_x0020_Type: supplierType,
-      One_x002d_time_x0020_Supplier: oneTime,
-      Request_x0020_Comments: comments
-    };
-
-    return itemProperties;
-  }
-
-  // Get ID of last folder created
-  function getLastId(library, Success, Error) {
-    const caml =
-      '<View><Query><Where>' +
-      "<Eq><FieldRef Name='FSObjType' /><Value Type='int'>1</Value></Eq>" +
-      '</Where>' +
-      "<OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy>" +
-      '</Query>' +
-      "<ViewFields><FieldRef Name='ID' /></ViewFields>" +
-      '<RowLimit>1</RowLimit>' +
-      '</View>';
-    const ctx = SP.ClientContext.get_current();
-    const web = ctx.get_web();
-    const list = web.get_lists().getByTitle(library);
-    const query = new SP.CamlQuery();
-    query.set_viewXml(caml);
-    const items = list.getItems(query);
-    ctx.load(items);
-    ctx.executeQueryAsync(function() {
-      const enumerator = items.getEnumerator();
-      enumerator.moveNext();
-      const item = enumerator.get_current();
-      const id = item.get_id();
-      Success(id);
-    }, Error);
-  }
 })();
 //</script>
