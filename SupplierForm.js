@@ -13,16 +13,16 @@
     .addEventListener('click', formSubmit);
 
   // Create SharePoint Document Set on form submit
+  // Get id number of last item in library
   function formSubmit() {
     // Library that holds Document Set
     const library = 'Testlibrary';
-    // Suppler detail to be passed into Document Set
-    const itemProperties = getSupplierDetail();
 
-    // Get id number of last item in library
     getLastId(
       library,
       function(id) {
+        // Suppler detail to be passed into Document Set
+        const itemProperties = getSupplierDetail();
         // Use last id to name new Document Set
         id += 1000;
         const docSetTitle = 'Supplier Request ' + id;
