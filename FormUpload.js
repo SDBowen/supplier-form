@@ -23,9 +23,9 @@ function uploadDocument() {
 
   function addItem(buffer, fileName) {
     // SharePoint library to upload file
-    const SITE = '/sites/TeamSites/WC%20Accounting/'
+    const SITE = '/sites/TeamSites/WC%20Accounting/';
     var library = 'Testlibrary';
-    var docSet = 'Supplier%20Request%201524627523547'
+    var docSet = 'Supplier%20Request%201524627523547';
     var fullPath = SITE + library + '/' + docSet;
     var call = uploadDocument(buffer, fileName, fullPath);
 
