@@ -10,7 +10,10 @@
   // Add form submit event listener
   document
     .getElementById('supplierSubmit')
-    .addEventListener('click', formSubmit);
+    .addEventListener('click', function(e) {
+      formSubmit;
+      e.preventDefault();
+    });
 
   // Create SharePoint Document Set on form submit
   // Get id number of last item in library
