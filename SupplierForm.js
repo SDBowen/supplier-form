@@ -15,14 +15,19 @@
   // Create SharePoint Document Set on form submit
   function formSubmit() {
     // Library that holds Document Set
-    const list = 'Testlibrary';
+    const library = 'Testlibrary';
+    // Suppler detail to be passed into Document Set
     const itemProperties = getSupplierDetail();
 
+    // Get id number of last item in library
     getLastId(
-      list,
+      library,
       function(id) {
-        const docSetTitle = 'Supplier Request ' + (1000 + id);
-        createDocSetObject(list, docSetTitle, itemProperties);
+        // Use last id to name new Document Set
+        id += 1000;
+        const docSetTitle = 'Supplier Request ' + id;
+        // Pass required info to create Document Set
+        createDocSetObject(library, docSetTitle, itemProperties);
       },
       function(sender, args) {
         console.log('Error:' + args.get_message());
@@ -30,7 +35,6 @@
     );
   }
 
-  // Takes Document Set name and item properties to be set
   const createDocSetObject = function(list, title, item) {
     var defer = $.Deferred();
     // list name, Document Set title, and the Document Set's content type
@@ -64,7 +68,7 @@
     return defer.promise;
   };
 
-  var createDocSet = function(listName, folderName, folderContentTypeId) {
+  const createDocSet = function(listName, folderName, folderContentTypeId) {
     var listUrl = webUrl + '/' + listName;
     var folderPayload = {
       Title: folderName,
@@ -85,8 +89,8 @@
     console.log('createDocSet successful');
   };
 
-  var update = function(list, item, type) {
-    var eTag = item.eTag;
+  const update = function(list, item, type) {
+    const eTag = item.eTag;
     delete item.eTag;
     //You may need to escape the list name when setting the __metadata property "type".
     if (type != undefined) {
@@ -142,8 +146,8 @@
   }
 
   // Get ID of last folder created
-  function getLastId(list, Success, Error) {
-    var caml =
+  function getLastId(library, Success, Error) {
+    const caml =
       '<View><Query><Where>' +
       "<Eq><FieldRef Name='FSObjType' /><Value Type='int'>1</Value></Eq>" +
       '</Where>' +
@@ -152,19 +156,18 @@
       "<ViewFields><FieldRef Name='ID' /></ViewFields>" +
       '<RowLimit>1</RowLimit>' +
       '</View>';
-    var ctx = SP.ClientContext.get_current();
-    var web = ctx.get_web();
-    var list = web.get_lists().getByTitle(list);
-    var query = new SP.CamlQuery();
+    const ctx = SP.ClientContext.get_current();
+    const web = ctx.get_web();
+    const list = web.get_lists().getByTitle(library);
+    const query = new SP.CamlQuery();
     query.set_viewXml(caml);
-    var items = list.getItems(query);
+    const items = list.getItems(query);
     ctx.load(items);
     ctx.executeQueryAsync(function() {
-      var enumerator = items.getEnumerator();
+      const enumerator = items.getEnumerator();
       enumerator.moveNext();
-      var item = enumerator.get_current();
-      id = item.get_id();
-      console.log(id);
+      const item = enumerator.get_current();
+      const id = item.get_id();
       Success(id);
     }, Error);
   }
