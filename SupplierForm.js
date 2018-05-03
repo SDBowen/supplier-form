@@ -11,7 +11,7 @@
   document
     .getElementById('supplierSubmit')
     .addEventListener('click', function(e) {
-      formSubmit;
+      formSubmit();
       e.preventDefault();
     });
 
