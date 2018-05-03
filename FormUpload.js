@@ -1,102 +1,169 @@
 //<script src="../SiteAssets/jquery-3.3.1.min.js"></script>
 //<script language="javascript" type="text/javascript">
+
 function uploadDocument() {
-  if (!window.FileReader) {
-    alert('This browser does not support the HTML5 File APIs');
-    return;
+  // Define the folder path for this example.
+  const SITE = '/sites/TeamSites/WC%20Accounting/';
+  var library = 'Testlibrary';
+  var docSet = 'Supplier%20Request%201524627523547';
+  var fullPath = SITE + library + '/' + docSet;
+
+  // Get values from the file input and text input page controls.
+  var fileInput = document.getElementById('uploadInput');
+  var fileCount = fileInput.files.length;
+  // Get the server URL.
+  var filesUploaded = 0;
+  for (var i = 0; i < fileCount; i++) {
+    // Initiate method calls using jQuery promises.
+    // Get the local file as an array buffer.
+    var getFile = getFileBuffer(i);
+    getFile.done(function(arrayBuffer, i) {
+      // Add the file to the SharePoint folder.
+      var addFile = addFileToFolder(arrayBuffer, i);
+      addFile.done(function(data, status, xhr) {
+        //Get ID of File uploaded
+        // var getfileID = getItem(file.d);
+        // getfileID.done(function (fResult) {
+        item = data.d;
+        var colObject = new Object();
+        colObject['Title'] = 'Testing Upload';
+        var changeItem = updateFileMetadata(library, item, colObject);
+        changeItem.done(function(result) {
+          filesUploaded++;
+          if (fileCount == filesUploaded) {
+            alert('All files uploaded successfully');
+            //$("#msg").append("<div>All files uploaded successfully</div>");
+            $('#getFile').value = null;
+            filesUploaded = 0;
+          }
+        });
+        changeItem.fail(function(result) {});
+
+        //}, function () { });
+      });
+      addFile.fail(onError);
+    });
+    getFile.fail(onError);
   }
 
-  var element = document.getElementById('uploadInput');
-  // Get file name
-  var file = element.files[0];
-  var parts = element.value.split('\\');
-  var fileName = parts[parts.length - 1];
-
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    addItem(e.target.result, fileName);
-  };
-  reader.onerror = function(e) {
-    alert(e.target.error);
-  };
-  reader.readAsArrayBuffer(file);
-
-  function addItem(buffer, fileName) {
-    // SharePoint library to upload file
-    const SITE = '/sites/TeamSites/WC%20Accounting/';
-    var library = 'Testlibrary';
-    var docSet = 'Supplier%20Request%201524627523547';
-    var fullPath = SITE + library + '/' + docSet;
-    var call = uploadDocument(buffer, fileName, fullPath);
-
-    // Get uploaded file SharePoint metadata
-    call.done(function(data, textStatus, jqXHR) {
-      var item = data.d;
-      // Set file metadata
-      var call2 = updateItemFields(item, library);
-      // Upload success
-      call2.done(function(data, textStatus, jqXHR) {
-        alert('Item added');
-      });
-      call2.fail(function(jqXHR, textStatus, errorThrown) {
-        failHandler(jqXHR, textStatus, errorThrown);
-      });
-    });
-    call.fail(function(jqXHR, textStatus, errorThrown) {
-      failHandler(jqXHR, textStatus, errorThrown);
-    });
+  // Get the local file as an array buffer.
+  function getFileBuffer(i) {
+    var deferred = jQuery.Deferred();
+    var reader = new FileReader();
+    reader.onloadend = function(e) {
+      deferred.resolve(e.target.result, i);
+    };
+    reader.onerror = function(e) {
+      deferred.reject(e.target.error);
+    };
+    reader.readAsArrayBuffer(fileInput.files[i]);
+    return deferred.promise();
   }
 
-  function uploadDocument(buffer, fileName, library) {
-    var url = _spPageContextInfo.webAbsoluteUrl
-    + "/_api/web/GetFolderByServerRelativeUrl('"+library+"')/Files/add(url='" + fileName + "',overwrite=true)?$expand=ListItemAllFields";
-    
-    var call = jQuery.ajax({
-      url: url,
+  // Add the file to the file collection in the Shared Documents folder.
+  function addFileToFolder(arrayBuffer, i) {
+    var index = i;
+
+    // Get the file name from the file input control on the page.
+    var fileName = fileInput.files[index].name;
+
+    // Construct the endpoint.
+    var fileCollectionEndpoint =
+      _spPageContextInfo.webAbsoluteUrl +
+      "/_api/web/GetFolderByServerRelativeUrl('" +
+      fullPath +
+      "')/Files/add(url='" +
+      fileName +
+      "',overwrite=true)?$expand=ListItemAllFields";
+
+    // Send the request and return the response.
+    // This call returns the SharePoint file.
+    return jQuery.ajax({
+      url: fileCollectionEndpoint,
       type: 'POST',
-      data: buffer,
+      data: arrayBuffer,
       processData: false,
       headers: {
-        Accept: 'application/json;odata=verbose',
+        accept: 'application/json;odata=verbose',
         'X-RequestDigest': jQuery('#__REQUESTDIGEST').val()
       }
     });
-    return call;
   }
+}
 
-  function updateItemFields(item, library) {
-    var call = jQuery.ajax({
-      url:
-        _spPageContextInfo.webAbsoluteUrl +
-        "/_api/Web/Lists/getByTitle('" + library + "')/Items(" +
-        item.ListItemAllFields.Id +
-        ')',
-      type: 'POST',
-      // Metadata to be set on uploaded file
-      data: JSON.stringify({
-        __metadata: { type: 'SP.Data.TestlibraryItem' },
-        Title: 'Testing Upload' 
-      }),
-      headers: {
-        Accept: 'application/json;odata=verbose',
-        'Content-Type': 'application/json;odata=verbose',
-        'X-RequestDigest': jQuery('#__REQUESTDIGEST').val(),
-        'IF-MATCH':
-          '"' +
-          // File etag needed for upload
-          item.ListItemAllFields.__metadata.etag.split('"')[1].toString() +
-          '"',
-        'X-Http-Method': 'MERGE'
-      }
-    });
+// Display error messages.
+function onError(error) {
+  alert(error.responseText);
+}
 
-    return call;
+function updateFileMetadata(library, item, colPropObject) {
+  var def = jQuery.Deferred();
+
+  var restSource =
+    _spPageContextInfo.webAbsoluteUrl +
+    "/_api/Web/Lists/getByTitle('" +
+    library +
+    "')/Items(" +
+    item.ListItemAllFields.Id +
+    ')';
+  var jsonString = '';
+
+  var metadataColumn = new Object();
+  metadataColumn['type'] = item.__metadata.type;
+  //columnArray.push(metadataColumn);
+  if (colPropObject == null || colPropObject == 'undefined') {
+    // For library having no column properties to be updated
+    colPropObject = new Object();
   }
+  colPropObject['__metadata'] = metadataColumn;
+  jsonString = JSON.stringify(colPropObject);
+  var dfd = jQuery.Deferred();
+  jQuery.ajax({
+    url: restSource,
+    method: 'POST',
+    data: jsonString,
+    headers: {
+      accept: 'application/json;odata=verbose',
+      'content-type': 'application/json;odata=verbose',
+      'X-RequestDigest': jQuery('#__REQUESTDIGEST').val(),
+      'IF-MATCH':
+        '"' +
+        // File etag needed for upload
+        item.ListItemAllFields.__metadata.etag.split('"')[1].toString() +
+        '"',
+      'X-Http-Method': 'MERGE'
+    },
+    success: function(data) {
+      var d = data;
+      dfd.resolve(d);
+    },
+    error: function(err) {
+      dfd.reject(err);
+    }
+  });
 
-  function failHandler(jqXHR, textStatus, errorThrown) {
-    var response = JSON.parse(jqXHR.responseText);
-    var message = response ? response.error.message.value : textStatus;
-    alert('Call failed. Error: ' + message);
-  }
+  return dfd.promise();
+}
+/*=====================================================
+Get Item for Uploaded Document
+=======================================================*/
+function getItem(file) {
+  var def = jQuery.Deferred();
+  jQuery.ajax({
+    url: file.ListItemAllFields.__deferred.uri,
+    type: 'GET',
+    dataType: 'json',
+    headers: {
+      Accept: 'application/json;odata=verbose'
+    },
+    success: function(data) {
+      def.resolve(data);
+    },
+    error: function(data, arg, jhr) {
+      def.reject(data, arg, jhr);
+    }
+  });
+  return def.promise();
+  //return call;
 }
 //</script>
