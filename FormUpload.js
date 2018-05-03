@@ -8,38 +8,32 @@ function uploadDocument() {
   var docSet = 'Supplier%20Request%201524627523547';
   var fullPath = SITE + library + '/' + docSet;
 
-  // Get values from the file input and text input page controls.
+  // Get file(s) detail
   var fileInput = document.getElementById('uploadInput');
   var fileCount = fileInput.files.length;
-  // Get the server URL.
   var filesUploaded = 0;
+
   for (var i = 0; i < fileCount; i++) {
-    // Initiate method calls using jQuery promises.
     // Get the local file as an array buffer.
     var getFile = getFileBuffer(i);
     getFile.done(function(arrayBuffer, i) {
       // Add the file to the SharePoint folder.
       var addFile = addFileToFolder(arrayBuffer, i);
       addFile.done(function(data, status, xhr) {
-        //Get ID of File uploaded
-        // var getfileID = getItem(file.d);
-        // getfileID.done(function (fResult) {
+        // Add metadata to uploaded file
         item = data.d;
-        var colObject = new Object();
-        colObject['Title'] = 'Testing Upload';
-        var changeItem = updateFileMetadata(library, item, colObject);
+        var fileMetadata = new Object();
+        fileMetadata['Title'] = 'Testing Upload';
+        var changeItem = updateFileMetadata(library, item, fileMetadata);
         changeItem.done(function(result) {
           filesUploaded++;
           if (fileCount == filesUploaded) {
             alert('All files uploaded successfully');
-            //$("#msg").append("<div>All files uploaded successfully</div>");
-            $('#getFile').value = null;
             filesUploaded = 0;
           }
         });
         changeItem.fail(function(result) {});
 
-        //}, function () { });
       });
       addFile.fail(onError);
     });
@@ -96,7 +90,7 @@ function onError(error) {
   alert(error.responseText);
 }
 
-function updateFileMetadata(library, item, colPropObject) {
+function updateFileMetadata(library, item, fileMetadata) {
   var def = jQuery.Deferred();
 
   var restSource =
@@ -111,12 +105,12 @@ function updateFileMetadata(library, item, colPropObject) {
   var metadataColumn = new Object();
   metadataColumn['type'] = item.__metadata.type;
   //columnArray.push(metadataColumn);
-  if (colPropObject == null || colPropObject == 'undefined') {
+  if (fileMetadata == null || fileMetadata == 'undefined') {
     // For library having no column properties to be updated
-    colPropObject = new Object();
+    fileMetadata = new Object();
   }
-  colPropObject['__metadata'] = metadataColumn;
-  jsonString = JSON.stringify(colPropObject);
+  fileMetadata['__metadata'] = metadataColumn;
+  jsonString = JSON.stringify(fileMetadata);
   var dfd = jQuery.Deferred();
   jQuery.ajax({
     url: restSource,
@@ -144,26 +138,5 @@ function updateFileMetadata(library, item, colPropObject) {
 
   return dfd.promise();
 }
-/*=====================================================
-Get Item for Uploaded Document
-=======================================================*/
-function getItem(file) {
-  var def = jQuery.Deferred();
-  jQuery.ajax({
-    url: file.ListItemAllFields.__deferred.uri,
-    type: 'GET',
-    dataType: 'json',
-    headers: {
-      Accept: 'application/json;odata=verbose'
-    },
-    success: function(data) {
-      def.resolve(data);
-    },
-    error: function(data, arg, jhr) {
-      def.reject(data, arg, jhr);
-    }
-  });
-  return def.promise();
-  //return call;
-}
+
 //</script>
