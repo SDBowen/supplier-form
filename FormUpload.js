@@ -11,7 +11,6 @@ function uploadDocument() {
   // Get file(s) detail
   var fileInput = document.getElementById('uploadInput');
   var fileCount = fileInput.files.length;
-  var filesUploaded = 0;
 
   for (var i = 0; i < fileCount; i++) {
     // Get the local file as an array buffer.
@@ -26,10 +25,8 @@ function uploadDocument() {
         fileMetadata['Title'] = 'Testing Upload';
         var changeItem = updateFileMetadata(library, item, fileMetadata);
         changeItem.done(function(result) {
-          filesUploaded++;
-          if (fileCount == filesUploaded) {
+          if (fileCount == (i + 1)) {
             alert('All files uploaded successfully');
-            filesUploaded = 0;
           }
         });
         changeItem.fail(function(result) {});
