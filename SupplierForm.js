@@ -9,6 +9,21 @@
     window.location.host +
     _spPageContextInfo.webServerRelativeUrl;
 
+  // Get UI variables
+  const requestTypeValue = document.getElementById('requestType'),
+    changeTypeValue = document.getElementById('changeType'),
+    uiSupplierNumber = document.getElementById('supplierNumberDiv'),
+    uiChangeType = document.getElementById('changeTypeDiv'),
+    uiChangeDetail = document.getElementById('changeDetailDiv'),
+    uiPaymentTerms = document.getElementById('paymentTermsDiv'),
+    supplierTypeValue = document.getElementById('supplierType'),
+    uiSupplierType = document.getElementById('supplierTypeDiv'),
+    uiOneTime = document.getElementById('oneTimeDiv');
+
+  requestTypeValue.addEventListener('click', function() {
+    uiSupplierInput();
+  });
+
   // Add form submit event listener
   document
     .getElementById('supplierSubmit')
@@ -27,7 +42,6 @@
   // Get id number of last item in library
   function formSubmit() {
     // Library that holds Document Set
-    
 
     getLastId(
       library,
@@ -189,11 +203,11 @@
     const SITE = '/sites/TeamSites/WC%20Accounting/';
     var docSet = 'Supplier%20Request%201524627523547';
     var fullPath = SITE + library + '/' + docSet;
-  
+
     // Get file(s) detail
     var fileInput = document.getElementById('uploadInput');
     var fileCount = fileInput.files.length;
-  
+
     for (var i = 0; i < fileCount; i++) {
       // Get the local file as an array buffer.
       var getFile = getFileBuffer(i);
@@ -207,18 +221,17 @@
           fileMetadata['Title'] = 'Testing Upload';
           var changeItem = updateFileMetadata(library, item, fileMetadata);
           changeItem.done(function(result) {
-            if (fileCount == (i + 1)) {
+            if (fileCount == i + 1) {
               alert('All files uploaded successfully');
             }
           });
           changeItem.fail(function(result) {});
-  
         });
         addFile.fail(onError);
       });
       getFile.fail(onError);
     }
-  
+
     // Get the local file as an array buffer.
     function getFileBuffer(i) {
       var deferred = jQuery.Deferred();
@@ -232,14 +245,14 @@
       reader.readAsArrayBuffer(fileInput.files[i]);
       return deferred.promise();
     }
-  
+
     // Add the file to the file collection in the Shared Documents folder.
     function addFileToFolder(arrayBuffer, i) {
       var index = i;
-  
+
       // Get the file name from the file input control on the page.
       var fileName = fileInput.files[index].name;
-  
+
       // Construct the endpoint.
       var fileCollectionEndpoint =
         _spPageContextInfo.webAbsoluteUrl +
@@ -248,7 +261,7 @@
         "')/Files/add(url='" +
         fileName +
         "',overwrite=true)?$expand=ListItemAllFields";
-  
+
       // Send the request and return the response.
       // This call returns the SharePoint file.
       return jQuery.ajax({
@@ -263,15 +276,15 @@
       });
     }
   }
-  
+
   // Display error messages.
   function onError(error) {
     alert(error.responseText);
   }
-  
+
   function updateFileMetadata(library, item, fileMetadata) {
     var def = jQuery.Deferred();
-  
+
     var restSource =
       _spPageContextInfo.webAbsoluteUrl +
       "/_api/Web/Lists/getByTitle('" +
@@ -280,7 +293,7 @@
       item.ListItemAllFields.Id +
       ')';
     var jsonString = '';
-  
+
     var metadataColumn = new Object();
     metadataColumn['type'] = item.__metadata.type;
     //columnArray.push(metadataColumn);
@@ -314,8 +327,27 @@
         dfd.reject(err);
       }
     });
-  
+
     return dfd.promise();
+  }
+
+  // Set user input
+  function uiSupplierInput() {
+    if (requestTypeValue.value === 'Update') {
+      uiPaymentTerms.style.display = 'none';
+      uiSupplierType.style.display = 'none';
+      uiOneTime.style.display = 'none';
+      uiSupplierNumber.style.display = 'block';
+      uiChangeDetail.style.display = 'block';
+      uiChangeType.style.display = 'block';
+    } else {
+      uiPaymentTerms.style.display = 'block';
+      uiSupplierType.style.display = 'block';
+      uiOneTime.style.display = 'block';
+      uiChangeDetail.style.display = 'none';
+      uiSupplierNumber.style.display = 'none';
+      uiChangeType.style.display = 'none';
+    }
   }
 })();
 //</script>
