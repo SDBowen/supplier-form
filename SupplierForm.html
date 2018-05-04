@@ -1,8 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <link rel="stylesheet" type="text/css" href="SupplierForm.css">
+    <link rel="stylesheet" type="text/css" href="SupplierForm.css?version=2">  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -28,7 +25,7 @@
             </div>
         </div>
 
-        <div class="container-form__section">
+        <div class="container-form__section" id="supplierNumberDiv">
             <label class="container-form__label">Supplier Number</label>
             <div>
                 <input id="supplierNumber" type="number">
@@ -42,7 +39,7 @@
             </div>
         </div>
 
-        <div class="container-form__section">
+        <div class="container-form__section" id="changeTypeDiv">
             <label class="container-form__label">
                 Change Type
             </label>
@@ -59,21 +56,21 @@
             </div>
         </div>
 
-        <div class="container-form__section">
+        <div class="container-form__section" id="changeDetailDiv">
             <label class="container-form__label">Change Detail</label>
             <div>
                 <input id="changeDetail" type="text">
             </div>
         </div>
 
-        <div class="container-form__section">
+        <div class="container-form__section" id="paymentTermsDiv">
             <label class="container-form__label">Payment Terms</label>
             <div>
                 <input id="paymentTerms" type="text">
             </div>
         </div>
 
-        <div class="container-form__section">
+        <div class="container-form__section" id="supplierTypeDiv">
             <label class="container-form__label">
                 Supplier Type
             </label>
@@ -98,7 +95,7 @@
             </div>
         </div>
 
-        <div class="container-form__section">
+        <div class="container-form__section" id="oneTimeDiv">
             <div>
                 <label class="container-form__label">One-time Supplier</label>
                 <input id="oneTime" type="checkbox">
@@ -124,7 +121,7 @@
                     </div>
             </div>
             <div>
-                <input id="addFileButton" type="button" value="Upload" onclick="uploadDocument()"/>
+                <input id="addFileButton" type="button" value="Upload" />
             </div>
         </div>
         <div>
@@ -134,5 +131,3 @@
         </div>
     </div>
 </body>
-
-</html>
