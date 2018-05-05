@@ -1,5 +1,5 @@
 // Designed for use as a SharePoint WebPart
-//<script src="../SiteAssets/jquery-3.3.1.min.js"></script>
+//<script src="../../SiteAssets/jquery-3.3.1.min.js" type="text/javascript"></script>
 //<script language="javascript" type="text/javascript">
 (function() {
   const library = 'Testlibrary';

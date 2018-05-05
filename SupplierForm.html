@@ -1,132 +1,135 @@
 <head>
-    <link rel="stylesheet" type="text/css" href="SupplierForm.css?version=2">  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/html" href="normalize.css">
+    <link rel="stylesheet" type="text/html" href="skeleton.css">
     <title>Supplier Form</title>
 </head>
 
 <body>
+    <div id="container-form">
+        <div class="container">
+            <div class="container-form">
+                <div class="container-form__header">
+                    <h2>Supplier Change Request</h2>
+                </div>
 
-    <div class="container-form">
-        <div class="container-form__header">
-            <h2>Supplier Setup/Change Request</h2>
-        </div>
-
-        <div class="container-form__section">
-            <label class="container-form__label">
-                Request Type
-            </label>
-            <div>
-                <select id="requestType">
-                    <option value="Update">Update Supplier Request</option>
-                    <option value="New">New Supplier Request</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="container-form__section" id="supplierNumberDiv">
-            <label class="container-form__label">Supplier Number</label>
-            <div>
-                <input id="supplierNumber" type="number">
-            </div>
-        </div>
-
-        <div class="container-form__section">
-            <label class="container-form__label">Supplier Name</label>
-            <div>
-                <input id="supplierName" type="text">
-            </div>
-        </div>
-
-        <div class="container-form__section" id="changeTypeDiv">
-            <label class="container-form__label">
-                Change Type
-            </label>
-            <div>
-                <select id="changeType">
-                    <option value="Active Status">Active Status</option>
-                    <option value="Supplier Type">Supplier Type</option>
-                    <option value="Name Change">Name Change</option>
-                    <option value="Remit Address">Remit Address</option>
-                    <option value="Payment Terms">Payment Terms</option>
-                    <option value="Payment Type">Payment Type</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="container-form__section" id="changeDetailDiv">
-            <label class="container-form__label">Change Detail</label>
-            <div>
-                <input id="changeDetail" type="text">
-            </div>
-        </div>
-
-        <div class="container-form__section" id="paymentTermsDiv">
-            <label class="container-form__label">Payment Terms</label>
-            <div>
-                <input id="paymentTerms" type="text">
-            </div>
-        </div>
-
-        <div class="container-form__section" id="supplierTypeDiv">
-            <label class="container-form__label">
-                Supplier Type
-            </label>
-            <div>
-                <select id="supplierType">
-                    <option value="Production (Certified)">Production (Certified)</option>
-                    <option value="MRO">MRO</option>
-                    <option value="Employee">Employee</option>
-                    <option value="Warranty">Warranty</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="container-form__section">
-            <label class="container-form__label">
-                Comments
-            </label>
-
-            <div>
-                <textarea id="comments" spellcheck="true" rows="3" cols="10"></textarea>
-            </div>
-        </div>
-
-        <div class="container-form__section" id="oneTimeDiv">
-            <div>
-                <label class="container-form__label">One-time Supplier</label>
-                <input id="oneTime" type="checkbox">
-
-            </div>
-        </div>
-
-        <div>
-            <div>
-                <input id="uploadInput" type="file" multiple />
-                <div>
-                        <select id="uploadType">
-                            <option value="ISO9001 or TS16949 Certificate">ISO9001 or TS16949 Certificate</option>
-                            <option value="Certificate of Liability Insurance">Certificate of Liability Insurance</option>
-                            <option value="Confidentiality Agreement">Confidentiality Agreement</option>
-                            <option value="Warranty Agreement">Warranty Agreement</option>
-                            <option value="Initial Supplier Questionnaire">Initial Supplier Questionnaire</option>
-                            <option value="Government Contract Compliance">Government Contract Compliance</option>
-                            <option value="Supplier Received Global Code of Conduct">Supplier Received Global Code of Conduct</option>
-                            <option value="Financial Evaluation - D&B Report">Financial Evaluation - D&B Report</option>
-                            <option value="W-9 Tax Form">W-9 Tax Form</option>                            
+                <div class="container-form__section">
+                    <label class="container-form__label" for="requestType">
+                        Request Type
+                    </label>
+                    <div>
+                        <select id="requestType" class="u-full-width">
+                            <option value="Update">Update Supplier Request</option>
+                            <option value="New">New Supplier Request</option>
                         </select>
                     </div>
-            </div>
-            <div>
-                <input id="addFileButton" type="button" value="Upload" />
-            </div>
-        </div>
-        <div>
-            <div>
-                <input type="button" value="Submit" id="supplierSubmit">
+                </div>
+
+                <div class="container-form__section" id="supplierNumberDiv">
+                    <label class="container-form__label" for="supplierNumber">Supplier Number</label>
+                    <div>
+                        <input id="supplierNumber" type="number" class="u-full-width">
+                    </div>
+                </div>
+
+                <div class="container-form__section">
+                    <label class="container-form__label" for="supplierName">Supplier Name</label>
+                    <div>
+                        <input id="supplierName" type="text" class="u-full-width">
+                    </div>
+                </div>
+
+                <div class="container-form__section" id="changeTypeDiv">
+                    <label class="container-form__label" for="changeType">
+                        Change Type
+                    </label>
+                    <div>
+                        <select id="changeType" class="u-full-width">
+                            <option value="Active Status">Active Status</option>
+                            <option value="Supplier Type">Supplier Type</option>
+                            <option value="Name Change">Name Change</option>
+                            <option value="Remit Address">Remit Address</option>
+                            <option value="Payment Terms">Payment Terms</option>
+                            <option value="Payment Type">Payment Type</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="container-form__section" id="changeDetailDiv">
+                    <label class="container-form__label" for="changeDetail">Change Detail</label>
+                    <div>
+                        <input id="changeDetail" type="text" class="u-full-width">
+                    </div>
+                </div>
+
+                <div class="container-form__section" id="paymentTermsDiv">
+                    <label class="container-form__label" for="paymentTerms">Payment Terms</label>
+                    <div>
+                        <input id="paymentTerms" type="text" class="u-full-width">
+                    </div>
+                </div>
+
+                <div class="container-form__section" id="supplierTypeDiv">
+                    <label class="container-form__label" for="supplierType">
+                        Supplier Type
+                    </label>
+                    <div>
+                        <select id="supplierType" class="u-full-width">
+                            <option value="Production (Certified)">Production (Certified)</option>
+                            <option value="MRO">MRO</option>
+                            <option value="Employee">Employee</option>
+                            <option value="Warranty">Warranty</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="container-form__section">
+                    <label class="container-form__label" for="comments">
+                        Comments
+                    </label>
+                    <div>
+                        <textarea id="comments" spellcheck="true" rows="3" cols="10" class="u-full-width"></textarea>
+                    </div>
+                </div>
+
+                <div class="container-form__section" id="oneTimeDiv">
+                    <div>
+                        <label class="container-form__label" for="oneTime">One-time Supplier</label>
+                        <input id="oneTime" type="checkbox">
+
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <input id="uploadInput" type="file" multiple />
+                        <div>
+                            <select id="uploadType">
+                                <option value="ISO9001 or TS16949 Certificate">ISO9001 or TS16949 Certificate</option>
+                                <option value="Certificate of Liability Insurance">Certificate of Liability Insurance</option>
+                                <option value="Confidentiality Agreement">Confidentiality Agreement</option>
+                                <option value="Warranty Agreement">Warranty Agreement</option>
+                                <option value="Initial Supplier Questionnaire">Initial Supplier Questionnaire</option>
+                                <option value="Government Contract Compliance">Government Contract Compliance</option>
+                                <option value="Supplier Received Global Code of Conduct">Supplier Received Global Code of Conduct</option>
+                                <option value="Financial Evaluation - D&B Report">Financial Evaluation - D&B Report</option>
+                                <option value="W-9 Tax Form">W-9 Tax Form</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <input id="addFileButton" type="button" value="Upload" />
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <input type="button" value="Submit" id="supplierSubmit">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
