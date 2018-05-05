@@ -8,7 +8,7 @@
  *    user zoom.
  */
 
-html {
+#container-form html {
   font-family: sans-serif; /* 1 */
   -ms-text-size-adjust: 100%; /* 2 */
   -webkit-text-size-adjust: 100%; /* 2 */
@@ -18,7 +18,7 @@ html {
  * Remove default margin.
  */
 
-body {
+#container-form body {
   margin: 0;
 }
 
@@ -32,19 +32,19 @@ body {
  * Correct `block` display not defined for `main` in IE 11.
  */
 
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-main,
-menu,
-nav,
-section,
-summary {
+#container-form article,
+#container-form aside,
+#container-form details,
+#container-form figcaption,
+#container-form figure,
+#container-form footer,
+#container-form header,
+#container-form hgroup,
+#container-form main,
+#container-form menu,
+#container-form nav,
+#container-form section,
+#container-form summary {
   display: block;
 }
 
@@ -53,10 +53,10 @@ summary {
  * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
  */
 
-audio,
-canvas,
-progress,
-video {
+#container-form audio,
+#container-form canvas,
+#container-form progress,
+#container-form video {
   display: inline-block; /* 1 */
   vertical-align: baseline; /* 2 */
 }
@@ -66,7 +66,7 @@ video {
  * Remove excess height in iOS 5 devices.
  */
 
-audio:not([controls]) {
+#container-form audio:not([controls]) {
   display: none;
   height: 0;
 }
@@ -77,7 +77,7 @@ audio:not([controls]) {
  */
 
 [hidden],
-template {
+#container-form template {
   display: none;
 }
 
@@ -96,8 +96,8 @@ a {
  * Improve readability when focused and also mouse hovered in all browsers.
  */
 
-a:active,
-a:hover {
+#container-form a:active,
+#container-form a:hover {
   outline: 0;
 }
 
@@ -108,7 +108,7 @@ a:hover {
  * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
  */
 
-abbr[title] {
+#container-form abbr[title] {
   border-bottom: 1px dotted;
 }
 
@@ -116,8 +116,8 @@ abbr[title] {
  * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
  */
 
-b,
-strong {
+#container-form b,
+#container-form strong {
   font-weight: bold;
 }
 
@@ -125,7 +125,7 @@ strong {
  * Address styling not present in Safari and Chrome.
  */
 
-dfn {
+#container-form dfn {
   font-style: italic;
 }
 
@@ -134,7 +134,7 @@ dfn {
  * contexts in Firefox 4+, Safari, and Chrome.
  */
 
-h1 {
+#container-form h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
@@ -143,7 +143,7 @@ h1 {
  * Address styling not present in IE 8/9.
  */
 
-mark {
+#container-form mark {
   background: #ff0;
   color: #000;
 }
@@ -183,7 +183,7 @@ sub {
  * Remove border when inside `a` element in IE 8/9/10.
  */
 
-img {
+#container-form img {
   border: 0;
 }
 
@@ -251,11 +251,11 @@ samp {
  * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
  */
 
-button,
-input,
-optgroup,
-select,
-textarea {
+#container-form button,
+#container-form input,
+#container-form optgroup,
+#container-form select,
+#container-form textarea {
   color: inherit; /* 1 */
   font: inherit; /* 2 */
   margin: 0; /* 3 */
@@ -265,7 +265,7 @@ textarea {
  * Address `overflow` set to `hidden` in IE 8/9/10/11.
  */
 
-button {
+ #container-form button {
   overflow: visible;
 }
 
@@ -276,8 +276,8 @@ button {
  * Correct `select` style inheritance in Firefox.
  */
 
-button,
-select {
+#container-form button,
+#container-form select {
   text-transform: none;
 }
 
@@ -289,10 +289,10 @@ select {
  *    `input` and others.
  */
 
-button,
-html input[type="button"], /* 1 */
-input[type="reset"],
-input[type="submit"] {
+#container-form button,
+#container-form html input[type="button"], /* 1 */
+#container-form input[type="reset"],
+#container-form input[type="submit"] {
   -webkit-appearance: button; /* 2 */
   cursor: pointer; /* 3 */
 }
@@ -301,8 +301,8 @@ input[type="submit"] {
  * Re-set default cursor for disabled elements.
  */
 
-button[disabled],
-html input[disabled] {
+#container-form button[disabled],
+#container-form html input[disabled] {
   cursor: default;
 }
 
@@ -310,8 +310,8 @@ html input[disabled] {
  * Remove inner padding and border in Firefox 4+.
  */
 
-button::-moz-focus-inner,
-input::-moz-focus-inner {
+#container-form button::-moz-focus-inner,
+#container-form input::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
@@ -321,7 +321,7 @@ input::-moz-focus-inner {
  * the UA stylesheet.
  */
 
-input {
+ #container-form input {
   line-height: normal;
 }
 
@@ -333,8 +333,8 @@ input {
  * 2. Remove excess padding in IE 8/9/10.
  */
 
-input[type="checkbox"],
-input[type="radio"] {
+#container-form input[type="checkbox"],
+#container-form input[type="radio"] {
   box-sizing: border-box; /* 1 */
   padding: 0; /* 2 */
 }
@@ -345,8 +345,8 @@ input[type="radio"] {
  * decrement button to change from `default` to `text`.
  */
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+#container-form input[type="number"]::-webkit-inner-spin-button,
+#container-form input[type="number"]::-webkit-outer-spin-button {
   height: auto;
 }
 
@@ -356,7 +356,7 @@ input[type="number"]::-webkit-outer-spin-button {
  *    (include `-moz` to future-proof).
  */
 
-input[type="search"] {
+ #container-form input[type="search"] {
   -webkit-appearance: textfield; /* 1 */
   -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box; /* 2 */
@@ -369,8 +369,8 @@ input[type="search"] {
  * padding (and `textfield` appearance).
  */
 
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
+#container-form input[type="search"]::-webkit-search-cancel-button,
+#container-form input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
@@ -378,7 +378,7 @@ input[type="search"]::-webkit-search-decoration {
  * Define consistent border, margin, and padding.
  */
 
-fieldset {
+ #container-form fieldset {
   border: 1px solid #c0c0c0;
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
@@ -389,7 +389,7 @@ fieldset {
  * 2. Remove padding so people aren't caught out if they zero out fieldsets.
  */
 
-legend {
+ #container-form legend {
   border: 0; /* 1 */
   padding: 0; /* 2 */
 }
@@ -398,7 +398,7 @@ legend {
  * Remove default vertical scrollbar in IE 8/9/10/11.
  */
 
-textarea {
+ #container-form textarea {
   overflow: auto;
 }
 
@@ -418,13 +418,13 @@ optgroup {
  * Remove most spacing between table cells.
  */
 
-table {
+ #container-form table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-td,
-th {
+#container-form td,
+#container-form th {
   padding: 0;
 }
 </style>
