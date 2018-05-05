@@ -24,7 +24,10 @@
     uiSupplierInput();
   });
 
-  // Add form submit event listener
+  // DOM load event
+  document.addEventListener('DOMContentLoaded', uiSupplierInput);
+
+  // Add form submit event listeners
   document
     .getElementById('supplierSubmit')
     .addEventListener('click', function(e) {
@@ -37,6 +40,26 @@
       uploadDocument();
       e.preventDefault();
     });
+
+
+  // Set form input based on request type
+  function uiSupplierInput() {
+    if (requestTypeValue.value === 'Update') {
+      uiPaymentTerms.style.display = 'none';
+      uiSupplierType.style.display = 'none';
+      uiOneTime.style.display = 'none';
+      uiSupplierNumber.style.display = 'block';
+      uiChangeDetail.style.display = 'block';
+      uiChangeType.style.display = 'block';
+    } else {
+      uiPaymentTerms.style.display = 'block';
+      uiSupplierType.style.display = 'block';
+      uiOneTime.style.display = 'block';
+      uiChangeDetail.style.display = 'none';
+      uiSupplierNumber.style.display = 'none';
+      uiChangeType.style.display = 'none';
+    }
+  }
 
   // Create SharePoint Document Set on form submit
   // Get id number of last item in library
@@ -329,25 +352,6 @@
     });
 
     return dfd.promise();
-  }
-
-  // Set user input
-  function uiSupplierInput() {
-    if (requestTypeValue.value === 'Update') {
-      uiPaymentTerms.style.display = 'none';
-      uiSupplierType.style.display = 'none';
-      uiOneTime.style.display = 'none';
-      uiSupplierNumber.style.display = 'block';
-      uiChangeDetail.style.display = 'block';
-      uiChangeType.style.display = 'block';
-    } else {
-      uiPaymentTerms.style.display = 'block';
-      uiSupplierType.style.display = 'block';
-      uiOneTime.style.display = 'block';
-      uiChangeDetail.style.display = 'none';
-      uiSupplierNumber.style.display = 'none';
-      uiChangeType.style.display = 'none';
-    }
   }
 })();
 //</script>
