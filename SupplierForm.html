@@ -117,11 +117,11 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <input id="filelist" type="text" class="u-full-width">
+                                        <input id="filelist" type="text" class="u-full-width" readonly>
                                     </td>
                                     <td>
                                         <div>
-                                            <select id="uploadType" class="u-full-width">
+                                            <select id="uploadType" multiple class="u-full-width">
                                                 <option value="ISO9001 or TS16949 Certificate">ISO9001 or TS16949 Certificate</option>
                                                 <option value="Certificate of Liability Insurance">Certificate of Liability Insurance</option>
                                                 <option value="Confidentiality Agreement">Confidentiality Agreement</option>
@@ -138,6 +138,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <div id="filelist">Testing</div>
                     <div>
                         <input id="uploadInput" type="file" name="replyFiles" multiple />
                     </div>
@@ -154,3 +155,6 @@
         </div>
     </div>
 </body>
+<script src="../../SiteAssets/jquery-3.3.1.min.js?version=final" type="text/javascript"></script>
+<script src="../../SiteAssets/uploadForm.js?timestamp=56534" type="text/javascript"></script>
+<script src="../../SiteAssets/createRequest.js?timestamp=56534" type="text/javascript"></script>
