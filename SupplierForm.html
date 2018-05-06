@@ -15,53 +15,55 @@
                     <h6>Supplier Change Request</h6>
                 </div>
 
-                <div class="container-form__section">
+                <div class="row">
                     <label class="container-form__label" for="requestType">
                         Request Type
                     </label>
                     <div>
-                        <select id="requestType" class="u-full-width">
+                        <select id="requestType">
                             <option value="Update">Update Supplier Request</option>
                             <option value="New">New Supplier Request</option>
                         </select>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="four columns" id="supplierNumberDiv">
+                    <div class="three columns" id="supplierNumberDiv">
                         <label class="container-form__label" for="supplierNumber">Supplier Number</label>
                         <div>
                             <input id="supplierNumber" type="number" class="u-full-width">
                         </div>
                     </div>
-                
-                <div class="eight columns">
-                    <label class="container-form__label" for="supplierName">Supplier Name</label>
-                    <div>
-                        <input id="supplierName" type="text" class="u-full-width">
-                    </div>
-                </div>
-            </div>
-                <div class="container-form__section" id="changeTypeDiv">
-                    <label class="container-form__label" for="changeType">
-                        Change Type
-                    </label>
-                    <div>
-                        <select id="changeType" class="u-full-width">
-                            <option value="Active Status">Active Status</option>
-                            <option value="Supplier Type">Supplier Type</option>
-                            <option value="Name Change">Name Change</option>
-                            <option value="Remit Address">Remit Address</option>
-                            <option value="Payment Terms">Payment Terms</option>
-                            <option value="Payment Type">Payment Type</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                </div>
 
-                <div class="container-form__section" id="changeDetailDiv">
-                    <label class="container-form__label" for="changeDetail">Change Detail</label>
-                    <div>
-                        <input id="changeDetail" type="text" class="u-full-width">
+                    <div class="nine columns">
+                        <label class="container-form__label" for="supplierName">Supplier Name</label>
+                        <div>
+                            <input id="supplierName" type="text" class="u-full-width">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="three columns" id="changeTypeDiv">
+                        <label class="container-form__label" for="changeType">
+                            Change Type
+                        </label>
+                        <div>
+                            <select id="changeType" class="u-full-width">
+                                <option value="Active Status">Active Status</option>
+                                <option value="Supplier Type">Supplier Type</option>
+                                <option value="Name Change">Name Change</option>
+                                <option value="Remit Address">Remit Address</option>
+                                <option value="Payment Terms">Payment Terms</option>
+                                <option value="Payment Type">Payment Type</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="nine columns" id="changeDetailDiv">
+                        <label class="container-form__label" for="changeDetail">Change Detail</label>
+                        <div>
+                            <input id="changeDetail" type="text" class="u-full-width">
+                        </div>
                     </div>
                 </div>
 
@@ -104,21 +106,40 @@
                 </div>
 
                 <div>
-                    <div class="row">
-                        <input id="uploadInput" type="file" multiple />
-                        <div>
-                            <select id="uploadType">
-                                <option value="ISO9001 or TS16949 Certificate">ISO9001 or TS16949 Certificate</option>
-                                <option value="Certificate of Liability Insurance">Certificate of Liability Insurance</option>
-                                <option value="Confidentiality Agreement">Confidentiality Agreement</option>
-                                <option value="Warranty Agreement">Warranty Agreement</option>
-                                <option value="Initial Supplier Questionnaire">Initial Supplier Questionnaire</option>
-                                <option value="Government Contract Compliance">Government Contract Compliance</option>
-                                <option value="Supplier Received Global Code of Conduct">Supplier Received Global Code of Conduct</option>
-                                <option value="Financial Evaluation - D&B Report">Financial Evaluation - D&B Report</option>
-                                <option value="W-9 Tax Form">W-9 Tax Form</option>
-                            </select>
-                        </div>
+                    <div>
+                        <table class="u-full-width">
+                            <thead>
+                                <tr>
+                                    <th>File</th>
+                                    <th>Document Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input id="filelist" type="text" class="u-full-width">
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <select id="uploadType" class="u-full-width">
+                                                <option value="ISO9001 or TS16949 Certificate">ISO9001 or TS16949 Certificate</option>
+                                                <option value="Certificate of Liability Insurance">Certificate of Liability Insurance</option>
+                                                <option value="Confidentiality Agreement">Confidentiality Agreement</option>
+                                                <option value="Warranty Agreement">Warranty Agreement</option>
+                                                <option value="Initial Supplier Questionnaire">Initial Supplier Questionnaire</option>
+                                                <option value="Government Contract Compliance">Government Contract Compliance</option>
+                                                <option value="Supplier Received Global Code of Conduct">Supplier Received Global Code of Conduct</option>
+                                                <option value="Financial Evaluation - D&B Report">Financial Evaluation - D&B Report</option>
+                                                <option value="W-9 Tax Form">W-9 Tax Form</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <input id="uploadInput" type="file" name="replyFiles" multiple />
                     </div>
                     <div>
                         <input id="addFileButton" type="button" value="Upload" />
