@@ -33,9 +33,25 @@ UI.prototype.addFileToList = function(fileName) {
   // Insert columns
   row.innerHTML = `
     <td>${fileName}</td>
-  `;
-
+    <td>
+      <div>
+        <select class="selectpicker" data-width="100%" multiple>
+          <option value="ISO9001 or TS16949 Certificate">ISO9001 or TS16949 Certificate</option>
+          <option value="Certificate of Liability Insurance">Certificate of Liability Insurance</option>
+          <option value="Confidentiality Agreement">Confidentiality Agreement</option>
+          <option value="Warranty Agreement">Warranty Agreement</option>
+          <option value="Initial Supplier Questionnaire">Initial Supplier Questionnaire</option>
+          <option value="Government Contract Compliance">Government Contract Compliance</option>
+          <option value="Supplier Received Global Code of Conduct">Supplier Received Global Code of Conduct</option>
+          <option value="Financial Evaluation - D&B Report">Financial Evaluation - D&B Report</option>
+          <option value="W-9 Tax Form">W-9 Tax Form</option>
+        </select>
+      </div>
+    </td>
+    `;
   list.appendChild(row);
+  $('.selectpicker').selectpicker('render');
+  
 };
 
 // DOM load event
