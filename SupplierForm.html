@@ -2,52 +2,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/html" href="normalize.css">
-    <link rel="stylesheet" type="text/html" href="skeleton.css">
+    <link rel="stylesheet" type="text/css" href="../../SiteAssets/bootstrap.min.css?version=final">
+    <link rel="stylesheet" type="text/css" href="../../SiteAssets/bootstrap-select.css?version=final1">
     <title>Supplier Form</title>
 </head>
 
 <body>
-    <div id="container-form">
-        <div class="container">
-            <div class="container-form">
-                <div class="container-form__header">
+    <div class="container">
+        <div>
+            <div>
+                <div>
                     <h6>Supplier Change Request</h6>
                 </div>
 
-                <div class="row">
-                    <label class="container-form__label" for="requestType">
-                        Request Type
-                    </label>
-                    <div>
-                        <select id="requestType">
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="requestType">
+                            Request Type
+                        </label>
+                        <select class="form-control" id="requestType">
                             <option value="Update">Update Supplier Request</option>
                             <option value="New">New Supplier Request</option>
                         </select>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="three columns" id="supplierNumberDiv">
-                        <label class="container-form__label" for="supplierNumber">Supplier Number</label>
-                        <div>
-                            <input id="supplierNumber" type="number" class="u-full-width">
-                        </div>
-                    </div>
-
-                    <div class="nine columns">
-                        <label class="container-form__label" for="supplierName">Supplier Name</label>
-                        <div>
-                            <input id="supplierName" type="text" class="u-full-width">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="three columns" id="changeTypeDiv">
-                        <label class="container-form__label" for="changeType">
+                    <div class="form-group col-md-3" id="changeTypeDiv">
+                        <label for="changeType">
                             Change Type
                         </label>
                         <div>
-                            <select id="changeType" class="u-full-width">
+                            <select class="form-control" id="changeType">
                                 <option value="Active Status">Active Status</option>
                                 <option value="Supplier Type">Supplier Type</option>
                                 <option value="Name Change">Name Change</option>
@@ -58,70 +41,90 @@
                             </select>
                         </div>
                     </div>
+                </div>
 
-                    <div class="nine columns" id="changeDetailDiv">
-                        <label class="container-form__label" for="changeDetail">Change Detail</label>
+                <div class="form-row">
+                    <div class="form-group col-md-2" id="supplierNumberDiv">
+                        <label for="supplierNumber">Supplier Number</label>
+                        <input class="form-control" id="supplierNumber" type="text">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="supplierName">Supplier Name</label>
+                        <input class="form-control" id="supplierName" type="text">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-8" id="changeDetailDiv">
+                        <label for="changeDetail">Change Detail</label>
                         <div>
-                            <input id="changeDetail" type="text" class="u-full-width">
+                            <input class="form-control" id="changeDetail" type="text">
                         </div>
                     </div>
                 </div>
 
-                <div class="container-form__section" id="paymentTermsDiv">
-                    <label class="container-form__label" for="paymentTerms">Payment Terms</label>
-                    <div>
-                        <input id="paymentTerms" type="text" class="u-full-width">
+                <div class="form-row">
+                    <div class="form-group" id="paymentTermsDiv">
+                        <label for="paymentTerms">Payment Terms</label>
+                        <div>
+                            <input class="form-control" id="paymentTerms" type="text">
+                        </div>
                     </div>
                 </div>
 
-                <div class="container-form__section" id="supplierTypeDiv">
-                    <label class="container-form__label" for="supplierType">
-                        Supplier Type
-                    </label>
-                    <div>
-                        <select id="supplierType" class="u-full-width">
-                            <option value="Production (Certified)">Production (Certified)</option>
-                            <option value="MRO">MRO</option>
-                            <option value="Employee">Employee</option>
-                            <option value="Warranty">Warranty</option>
-                            <option value="Other">Other</option>
-                        </select>
+                <div class="form-row">
+                    <div class="form-group" id="supplierTypeDiv">
+                        <label for="supplierType">
+                            Supplier Type
+                        </label>
+                        <div>
+                            <select class="form-control" id="supplierType">
+                                <option value="Production (Certified)">Production (Certified)</option>
+                                <option value="MRO">MRO</option>
+                                <option value="Employee">Employee</option>
+                                <option value="Warranty">Warranty</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-                <div class="container-form__section">
-                    <label class="container-form__label" for="comments">
-                        Comments
-                    </label>
-                    <div>
-                        <textarea id="comments" spellcheck="true" rows="3" cols="10" class="u-full-width"></textarea>
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label for="comments">
+                            Comments
+                        </label>
+                        <div>
+                            <textarea class="form-control" id="comments" spellcheck="true" rows="3" cols="10"></textarea>
+                        </div>
                     </div>
                 </div>
 
-                <div class="container-form__section" id="oneTimeDiv">
+                <div class="form-group" id="oneTimeDiv">
                     <div>
-                        <label class="container-form__label" for="oneTime">One-time Supplier</label>
+                        <label for="oneTime">One-time Supplier</label>
                         <input id="oneTime" type="checkbox">
                     </div>
                 </div>
 
                 <div>
-                    <div>
-                        <table class="u-full-width">
-                            <thead>
+                    <div class="form-group col-md-8">
+                        <table class="table">
+                            <thead class="table">
                                 <tr>
-                                    <th>File</th>
-                                    <th>Document Type</th>
+                                    <th style="width: 10%" scope="col">File</th>
+                                    <th style="width: 90%"  scope="col">Document Type</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="fileList">
                                 <tr>
                                     <td>
-                                        <input id="filelist" type="text" class="u-full-width" readonly>
+                                        FakeFile.pdf
                                     </td>
                                     <td>
                                         <div>
-                                            <select id="uploadType" multiple class="u-full-width">
+                                            <select class="selectpicker" data-width="100%" id="uploadType" multiple>
                                                 <option value="ISO9001 or TS16949 Certificate">ISO9001 or TS16949 Certificate</option>
                                                 <option value="Certificate of Liability Insurance">Certificate of Liability Insurance</option>
                                                 <option value="Confidentiality Agreement">Confidentiality Agreement</option>
@@ -138,17 +141,18 @@
                             </tbody>
                         </table>
                     </div>
-                    <div id="filelist">Testing</div>
-                    <div>
-                        <input id="uploadInput" type="file" name="replyFiles" multiple />
+                    <div class="custom-file form-group col-md-8">
+                        <input class="custom-file-input" id="uploadInput" type="file" name="replyFiles" multiple />
+                        <label class="custom-file-label" for="uploadInput">Choose file</label>
                     </div>
                     <div>
                         <input id="addFileButton" type="button" value="Upload" />
+
                     </div>
                 </div>
                 <div>
                     <div>
-                        <input class="button-primary" type="button" value="Submit" id="supplierSubmit">
+                        <input type="button" value="Submit" id="supplierSubmit">
                     </div>
                 </div>
             </div>
@@ -156,5 +160,7 @@
     </div>
 </body>
 <script src="../../SiteAssets/jquery-3.3.1.min.js?version=final" type="text/javascript"></script>
+<script src="../../SiteAssets/bootstrap.bundle.min.js?version=final" type="text/javascript"></script>
+<script src="../../SiteAssets/bootstrap-select.js?version=final1" type="text/javascript"></script>
 <script src="../../SiteAssets/uploadForm.js?timestamp=56534" type="text/javascript"></script>
 <script src="../../SiteAssets/createRequest.js?timestamp=56534" type="text/javascript"></script>
