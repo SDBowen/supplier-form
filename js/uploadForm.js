@@ -1,7 +1,7 @@
-function uploadDocument() {
+function uploadDocument(title) {
   // Define the folder path for this example.
   const SITE = '/sites/TeamSites/WC%20Accounting/';
-  var docSet = 'Supplier%20Request%201524627523547';
+  var docSet = title.replace(/ /g,"%20");;
   var fullPath = SITE + library + '/' + docSet;
 
   // Get file(s) detail
