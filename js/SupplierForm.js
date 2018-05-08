@@ -47,6 +47,8 @@ UI.prototype.addFileToList = function(fileName) {
   // Display new files selected
   list.appendChild(row);
   $('.selectpicker').selectpicker('render');
+  var teste = document.getElementsByClassName('selectpicker');
+  console.log("teste: " + teste[0].value)
 };
 
 UI.prototype.clearFileList = function() {
@@ -99,10 +101,6 @@ document
     formSubmit();
     e.preventDefault();
   });
-document.getElementById('addFileButton').addEventListener('click', function(e) {
-  uploadDocument();
-  e.preventDefault();
-});
 
 requestTypeValue.addEventListener('click', function() {
   uiSupplierInput();
