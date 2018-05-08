@@ -19,10 +19,6 @@ const requestTypeValue = document.getElementById('requestType'),
   uiSupplierType = document.getElementById('supplierTypeDiv'),
   uiOneTime = document.getElementById('oneTimeDiv');
 
-requestTypeValue.addEventListener('click', function() {
-  uiSupplierInput();
-});
-
 function UI() {}
 
 // Add selected files to list
@@ -106,6 +102,10 @@ document
 document.getElementById('addFileButton').addEventListener('click', function(e) {
   uploadDocument();
   e.preventDefault();
+});
+
+requestTypeValue.addEventListener('click', function() {
+  uiSupplierInput();
 });
 
 // Set form input based on request type
