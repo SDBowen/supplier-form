@@ -29,13 +29,13 @@ function UI() {}
 UI.prototype.addFileToList = function(fileName) {
   const list = document.getElementById('fileList');
   // Create tr element
-  const row = document.createElement('tr');
+  const row = document.createElement('div');
+  row.className = "row mb-2";
   // Insert columns
   row.innerHTML = `
-    <td>${fileName}</td>
-    <td>
-      <div>
-        <select class="selectpicker" data-width="100%" multiple>
+    <div class="col-md-4"><p>${fileName}</p></div>
+      <div class="col-md-4">
+        <select title="Select document type(s)" class="selectpicker" data-width="100%" multiple data-selected-text-format="count">
           <option value="ISO9001 or TS16949 Certificate">ISO9001 or TS16949 Certificate</option>
           <option value="Certificate of Liability Insurance">Certificate of Liability Insurance</option>
           <option value="Confidentiality Agreement">Confidentiality Agreement</option>
@@ -47,7 +47,6 @@ UI.prototype.addFileToList = function(fileName) {
           <option value="W-9 Tax Form">W-9 Tax Form</option>
         </select>
       </div>
-    </td>
     `;
   list.appendChild(row);
   $('.selectpicker').selectpicker('render');
