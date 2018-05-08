@@ -11,10 +11,7 @@
     <div class="container">
         <div>
             <div>
-                <div>
-                    <h6></h6>
-                </div>
-
+                <div class="row mt-5"></div>
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="requestType">
@@ -107,53 +104,33 @@
                         <input id="oneTime" type="checkbox">
                     </div>
                 </div>
-
-                <div>
-                    <div class="form-group col-md-8">
-                        <table class="table table-sm">
-                            <thead class="table">
-                                <tr>
-                                    <th style="width: 40%" scope="col">File</th>
-                                    <th style="width: 60%"  scope="col">Document Type</th>
-                                </tr>
-                            </thead>
-                            <tbody id="fileList">
-                                <tr>
-                                    <td>
-                                        FakeFile.pdf
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <select title="Select document type(s)" class="selectpicker" data-width="100%" multiple data-selected-text-format="count">
-                                                <option value="ISO9001 or TS16949 Certificate">ISO9001 or TS16949 Certificate</option>
-                                                <option value="Certificate of Liability Insurance">Certificate of Liability Insurance</option>
-                                                <option value="Confidentiality Agreement">Confidentiality Agreement</option>
-                                                <option value="Warranty Agreement">Warranty Agreement</option>
-                                                <option value="Initial Supplier Questionnaire">Initial Supplier Questionnaire</option>
-                                                <option value="Government Contract Compliance">Government Contract Compliance</option>
-                                                <option value="Supplier Received Global Code of Conduct">Supplier Received Global Code of Conduct</option>
-                                                <option value="Financial Evaluation - D&B Report">Financial Evaluation - D&B Report</option>
-                                                <option value="W-9 Tax Form">W-9 Tax Form</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6>File</h6>
+                        </div>
+                        <div class="col-md-4">
+                            <h6>Document Type</h6>
+                        </div>
                     </div>
-                    <div class="custom-file form-group col-md-8">
-                        <input class="custom-file-input" id="uploadInput" type="file" name="replyFiles" multiple />
-                        <label class="custom-file-label" for="uploadInput">Choose file</label>
+                    <div id="fileList">
                     </div>
-                    <div>
-                        <input id="addFileButton" type="button" value="Upload" />
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="custom-file col-md-4">
+                            <input class="custom-file-input" id="uploadInput" type="file" name="replyFiles" multiple />
+                            <label class="custom-file-label" for="uploadInput">Choose file</label>
+                        </div>
 
+                        <div class="custom-file col-md-4">
+                            <input type="button" value="Submit" id="supplierSubmit">
+                        </div>
                     </div>
                 </div>
                 <div>
-                    <div>
-                        <input type="button" value="Submit" id="supplierSubmit">
-                    </div>
+                    <input id="addFileButton" type="button" value="Upload" />
+
                 </div>
             </div>
         </div>
