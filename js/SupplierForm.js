@@ -28,9 +28,9 @@ function UI() {}
 // Add selected files to list
 UI.prototype.addFileToList = function(fileName) {
   const list = document.getElementById('fileList');
-  // Create tr element
+  // Create div element
   const row = document.createElement('div');
-  row.className = "row mb-2";
+  row.className = 'row mb-2';
   // Insert columns
   row.innerHTML = `
     <div class="col-md-4"><p>${fileName}</p></div>
@@ -48,9 +48,17 @@ UI.prototype.addFileToList = function(fileName) {
         </select>
       </div>
     `;
+  // Display new files selected
   list.appendChild(row);
   $('.selectpicker').selectpicker('render');
-  
+};
+
+UI.prototype.clearFileList = function() {
+  const list = document.getElementById('fileList');
+  // Clear any prior selected files
+  while (list.firstChild) {
+    list.removeChild(list.firstChild);
+  }
 };
 
 // DOM load event
@@ -79,6 +87,8 @@ function handleFileSelect(e) {
   var filesArr = Array.prototype.slice.call(files);
 
   const ui = new UI();
+
+  ui.clearFileList();
 
   filesArr.forEach(function(f) {
     //print new selected files into the given division
