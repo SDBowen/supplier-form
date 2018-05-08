@@ -44,6 +44,8 @@
           function(response2) {
             //Formulate your response to the calling funciton
             var result = console.log('Success!');
+            // Upload attached files
+            uploadDocument(title);
             defer.resolve(result);
           },
           function(error) {
