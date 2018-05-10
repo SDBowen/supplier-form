@@ -1,7 +1,8 @@
+//<script>
 function uploadDocument(title) {
   // Define the folder path for this example.
   const SITE = '/sites/TeamSites/WC%20Accounting/';
-  var docSet = title.replace(/ /g,"%20");;
+  var docSet = title.replace(/ /g, '%20');
   var fullPath = SITE + library + '/' + docSet;
 
   // Get file(s) detail
@@ -17,9 +18,7 @@ function uploadDocument(title) {
       addFile.done(function(data, status, xhr) {
         // Add metadata to uploaded file
         item = data.d;
-        var fileMetadata = new Object();
-        fileMetadata['Title'] = 'Testing Upload';
-        var changeItem = updateFileMetadata(library, item, fileMetadata);
+        var changeItem = updateFileMetadata(library, item);
         changeItem.done(function(result) {
           if (fileCount == i + 1) {
             alert('All files uploaded successfully');
@@ -82,9 +81,8 @@ function onError(error) {
   alert(error.responseText);
 }
 
-function updateFileMetadata(library, item, fileMetadata) {
-  var def = jQuery.Deferred();
-
+function updateFileMetadata(library, item) {
+  console.log(JSON.stringify(item));
   var restSource =
     _spPageContextInfo.webAbsoluteUrl +
     "/_api/Web/Lists/getByTitle('" +
@@ -92,19 +90,13 @@ function updateFileMetadata(library, item, fileMetadata) {
     "')/Items(" +
     item.ListItemAllFields.Id +
     ')';
-  var jsonString = '';
 
-  var metadataColumn = new Object();
-  metadataColumn['type'] = item.__metadata.type;
-  //columnArray.push(metadataColumn);
-  if (fileMetadata == null || fileMetadata == 'undefined') {
-    // For library having no column properties to be updated
-    fileMetadata = new Object();
-  }
-  fileMetadata['__metadata'] = metadataColumn;
-  jsonString = JSON.stringify(fileMetadata);
-  var dfd = jQuery.Deferred();
-  jQuery.ajax({
+  let jsonString = JSON.stringify({
+    __metadata: { type: 'SP.Data.TestlibraryItem' },
+    TestVal: 'Testing Value'
+  });
+
+  return jQuery.ajax({
     url: restSource,
     method: 'POST',
     data: jsonString,
@@ -118,15 +110,7 @@ function updateFileMetadata(library, item, fileMetadata) {
         item.ListItemAllFields.__metadata.etag.split('"')[1].toString() +
         '"',
       'X-Http-Method': 'MERGE'
-    },
-    success: function(data) {
-      var d = data;
-      dfd.resolve(d);
-    },
-    error: function(err) {
-      dfd.reject(err);
     }
   });
-
-  return dfd.promise();
 }
+//</script>
