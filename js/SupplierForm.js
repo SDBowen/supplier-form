@@ -58,7 +58,7 @@ UI.prototype.clearFileList = function() {
 };
 
 // DOM load event
-document.addEventListener('DOMContentLoaded', uiSupplierInput);
+document.addEventListener('DOMContentLoaded', uiSetupForm);
 
 var selDiv = '';
 var storedFiles = []; //store the object of the all files
@@ -109,11 +109,11 @@ document
   });
 
 requestTypeValue.addEventListener('click', function() {
-  uiSupplierInput();
+  uiSetupForm();
 });
 
 // Set form input based on request type
-function uiSupplierInput() {
+function uiSetupForm() {
   if (requestTypeValue.value === 'Update') {
     uiPaymentTerms.style.display = 'none';
     uiSupplierType.style.display = 'none';
