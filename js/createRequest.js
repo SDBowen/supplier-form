@@ -1,3 +1,4 @@
+  //<script>
   // Get ID of last folder created
   function getLastId(library, Success, Error) {
     const caml =
@@ -110,3 +111,5 @@
         ')'
     });
   };
+  //</script>
+  
