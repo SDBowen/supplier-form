@@ -86,10 +86,8 @@ UI.prototype.formSetup = function() {
     uiChangeType.style.display = 'none';
   }
 };
-//</script>
 
-
-const data = {
+UI.prototype.data = {
   activeStatus: { label: 'Change Supplier to:', options: ['Active', 'Inactive'] },
   supplierType: { label: 'Supplier Type:', options: ['Production (Certified)', 'Production (Non-Certified)', 'MRO', 'Warranty', 'Employee', 'Other'] },
   nameChange: { label: 'New Name:' },
@@ -97,4 +95,7 @@ const data = {
   paymentTerms: { label: 'Change Supplier to:', options: ['Active', 'Inactive'] },
   paymentType: { label: 'Change Supplier to:', options: ['Active', 'Inactive'] },
   other: { label: 'Change Description:' }
-}
+};
+//</script>
+
+
