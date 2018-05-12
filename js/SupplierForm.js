@@ -17,9 +17,9 @@ const requestTypeValue = document.getElementById('requestType'),
   uiPaymentTerms = document.getElementById('paymentTermsDiv'),
   supplierTypeValue = document.getElementById('supplierType'),
   uiSupplierType = document.getElementById('supplierTypeDiv'),
-  uiOneTime = document.getElementById('oneTimeDiv');
+  uiOneTime = document.getElementById('oneTimeDiv'),
+  selDiv = document.querySelector('#filelist');
 
-var selDiv = '';
 var storedFiles = []; //store the object of the all files
 
 // DOM load event
@@ -27,33 +27,29 @@ document.addEventListener('DOMContentLoaded', init, false);
 
 function init() {
   const ui = new UI();
-  ui.formSetup();
+  ui.formSetup(changeTypeValue.value);
 
-  //To add the change listener on over file element
+  // Add event listener on file upload
   document
     .querySelector('#uploadInput')
     .addEventListener('change', handleFileSelect, false);
 
-  //allocate division where you want to print file name
-  selDiv = document.querySelector('#filelist');
-  document
-    .querySelector('#requestType')
-    .addEventListener('change', handleFormChange, false);
+  requestTypeValue.addEventListener('change', handleFormChange, false);
+
+  changeTypeValue.addEventListener('change', function() {
+    const ui = new UI();
+    ui.formSetup(changeTypeValue.value);
+  });
 }
 
-requestTypeValue.addEventListener('click', function() {
-  const ui = new UI();
-  ui.formSetup();
-});
-
-function handleFormChange(e) {
+function handleFormChange() {
   // Get array of file names
   const ui = new UI();
 
-  ui.formType();
+  ui.formType(changeTypeValue.value);
 }
 
-function handleFileSelect(e) {
+function handleFileSelect() {
   // Check if file was selected
   if (!e.target.files) return;
 
