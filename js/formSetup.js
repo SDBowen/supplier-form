@@ -31,21 +31,91 @@ UI.prototype.addFileToList = function(fileName) {
 };
 
 // Update form for selected change type
-UI.prototype.formType = function(requestType) {
+UI.prototype.formSetup = function(requestType) {
   this.formReset();
+  if (requestTypeValue.value === 'updateSupplier') {
+    const supplierNumberDiv = document.getElementById('supplierNumberDiv');
+    const supplierNumberInput = document.createElement('input');
+    const supplierNumberLabel = document.createElement('label');
+    supplierNumberLabel.setAttribute('for', 'supplierNumber');
+    supplierNumberLabel.innerHTML = 'Supplier Number';
+    supplierNumberInput.setAttribute('id', 'supplierNumber');
+    supplierNumberInput.setAttribute('class', 'form-control');
+    supplierNumberDiv.appendChild(supplierNumberLabel);
+    supplierNumberDiv.appendChild(supplierNumberInput);
+
+    const changeDiv = document.getElementById('changeDetailDiv');
+    const elementType = this.data[requestType].hasOwnProperty('options')
+      ? 'select'
+      : 'input';
+    const changeInput = document.createElement(elementType);
+
+    // Create label element
+    const changeLabel = document.createElement('label');
+    changeLabel.setAttribute('for', 'changeDetail');
+    changeLabel.innerHTML = this.data[requestType].label;
+    // Create input element
+    changeInput.setAttribute('id', 'changeDetail');
+    changeInput.setAttribute('class', 'form-control');
+    // If select input add options
+    if (elementType === 'select') {
+      let option;
+      this.data[requestType].options.forEach(function(e) {
+        option = document.createElement('option');
+        option.setAttribute('value', e);
+        option.innerHTML = e;
+        changeInput.appendChild(option);
+      });
+    }
+
+    // Display input and label
+    changeDiv.appendChild(changeLabel);
+    changeDiv.appendChild(changeInput);
+  } else {
+    this.addFormInput('supplierType');
+    this.addFormInput('paymentTerms');    
+  }
+};
+
+UI.prototype.clearFileList = function() {
+  const fileList = document.getElementById('fileList');
+  // Clear any prior selected files
+  while (fileList.firstChild) {
+    fileList.removeChild(fileList.firstChild);
+  }
+};
+
+UI.prototype.formReset = function() {
   const changeDiv = document.getElementById('changeDetailDiv');
+  const numberDiv = document.getElementById('supplierNumberDiv');
+  // Clear any prior selected files
+  while (changeDiv.firstChild) {
+    changeDiv.removeChild(changeDiv.firstChild);
+  }
+  while (numberDiv.firstChild) {
+    numberDiv.removeChild(numberDiv.firstChild);
+  }
+  while (newDetail.firstChild) {
+    newDetail.removeChild(newDetail.firstChild);
+  }
+};
+
+UI.prototype.addFormInput = function(requestType) {
+  const dom = document.getElementById('newDetail');
+  const div = document.createElement('div');
+  div.setAttribute('class', 'form-group col-md-4');  
   const elementType = this.data[requestType].hasOwnProperty('options')
     ? 'select'
     : 'input';
-  const changeInput = document.createElement(elementType);
+  const input = document.createElement(elementType);
 
   // Create label element
-  const changeLabel = document.createElement('label');
-  changeLabel.setAttribute('for', 'changeDetail');
-  changeLabel.innerHTML = this.data[requestType].label;
+  const label = document.createElement('label');
+  label.setAttribute('for', requestType);
+  label.innerHTML = this.data[requestType].label;
   // Create input element
-  changeInput.setAttribute('id', 'changeDetail');
-  changeInput.setAttribute('class', 'form-control');
+  input.setAttribute('id', requestType);
+  input.setAttribute('class', 'form-control');
   // If select input add options
   if (elementType === 'select') {
     let option;
@@ -53,49 +123,14 @@ UI.prototype.formType = function(requestType) {
       option = document.createElement('option');
       option.setAttribute('value', e);
       option.innerHTML = e;
-      changeInput.appendChild(option);
+      input.appendChild(option);
     });
   }
 
   // Display input and label
-  changeDiv.appendChild(changeLabel);
-  changeDiv.appendChild(changeInput);
-};
-
-UI.prototype.clearFileList = function() {
-  const list = document.getElementById('fileList');
-  // Clear any prior selected files
-  while (list.firstChild) {
-    list.removeChild(list.firstChild);
-  }
-};
-
-UI.prototype.formReset = function() {
-  const changeDiv = document.getElementById('changeDetailDiv');
-  // Clear any prior selected files
-  while (changeDiv.firstChild) {
-    changeDiv.removeChild(changeDiv.firstChild);
-  }
-};
-
-// Set form input based on request type
-UI.prototype.formSetup = function(requestType) {
-  this.formType(requestType);
-  if (requestTypeValue.value === 'Update') {
-    uiPaymentTerms.style.display = 'none';
-    uiSupplierType.style.display = 'none';
-    uiOneTime.style.display = 'none';
-    uiSupplierNumber.style.display = 'block';
-    uiChangeDetail.style.display = 'block';
-    uiChangeType.style.display = 'block';
-  } else {
-    uiPaymentTerms.style.display = 'block';
-    uiSupplierType.style.display = 'block';
-    uiOneTime.style.display = 'block';
-    uiChangeDetail.style.display = 'none';
-    uiSupplierNumber.style.display = 'none';
-    uiChangeType.style.display = 'none';
-  }
+  div.appendChild(label);
+  div.appendChild(input);
+  dom.appendChild(div);  
 };
 
 UI.prototype.data = {
