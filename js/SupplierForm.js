@@ -36,17 +36,15 @@ function init() {
 
   requestTypeValue.addEventListener('change', handleFormChange, false);
 
-  changeTypeValue.addEventListener('change', function() {
-    const ui = new UI();
-    ui.formSetup(changeTypeValue.value);
-  });
+  changeTypeValue.addEventListener('change', handleFormChange, false);
 }
 
 function handleFormChange() {
   // Get array of file names
+  console.log('fire');
   const ui = new UI();
 
-  ui.formType(changeTypeValue.value);
+  ui.formSetup(changeTypeValue.value);
 }
 
 function handleFileSelect() {
