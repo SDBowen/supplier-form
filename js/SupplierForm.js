@@ -20,14 +20,18 @@ const requestTypeValue = document.getElementById('requestType'),
   uiOneTime = document.getElementById('oneTimeDiv'),
   selDiv = document.querySelector('#filelist');
 
-var storedFiles = []; //store the object of the all files
+let storedFiles = []; //store the object of the all files
 
 // DOM load event
 document.addEventListener('DOMContentLoaded', init, false);
 
 function init() {
-  const ui = new UI();
-  ui.formSetup(changeTypeValue.value);
+  let uiSetup = new Promise((resolve, reject) => {
+    const ui = new UI();
+    ui.formSetup('activeStatus');
+
+    resolve();
+  });
 
   // Add event listener on file upload
   document
@@ -36,15 +40,19 @@ function init() {
 
   requestTypeValue.addEventListener('change', handleFormChange, false);
 
-  changeTypeValue.addEventListener('change', handleFormChange, false);
+  uiSetup.then(() => {
+    document
+      .getElementById('changeType')
+      .addEventListener('change', handleFormChange, false);
+  });
 }
 
 function handleFormChange() {
   // Get array of file names
   console.log('fire');
   const ui = new UI();
-
-  ui.formSetup(changeTypeValue.value);
+  console.log(document.getElementById('changeType').value);
+  ui.formSetup(document.getElementById('changeType').value);
 }
 
 function handleFileSelect() {
