@@ -26,33 +26,22 @@ let storedFiles = []; //store the object of the all files
 document.addEventListener('DOMContentLoaded', init, false);
 
 function init() {
-  let uiSetup = new Promise((resolve, reject) => {
-    const ui = new UI();
-    ui.formSetup('activeStatus');
+  // Create DOM form
+  const ui = new UI();
+  ui.formTypeChange();
 
-    resolve();
-  });
+  // Add event listener on form request type change
+  requestTypeValue.addEventListener('change', handleFormChange, false);
 
   // Add event listener on file upload
   document
     .querySelector('#uploadInput')
     .addEventListener('change', handleFileSelect, false);
-
-  requestTypeValue.addEventListener('change', handleFormChange, false);
-
-  uiSetup.then(() => {
-    document
-      .getElementById('changeType')
-      .addEventListener('change', handleFormChange, false);
-  });
 }
 
 function handleFormChange() {
-  // Get array of file names
-  console.log('fire');
   const ui = new UI();
-  console.log(document.getElementById('changeType').value);
-  ui.formSetup(document.getElementById('changeType').value);
+  ui.formTypeChange(); 
 }
 
 function handleFileSelect() {
