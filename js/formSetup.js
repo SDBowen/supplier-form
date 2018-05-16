@@ -37,19 +37,19 @@ UI.prototype.formTypeChange = function() {
   this.formReset();
   // Display correct options for form type
   if (formType.value === 'newSupplier') {
-    this.addFormInput('Supplier Type');
-    this.addFormInput('Payment Terms');
+    this.addFormInput('supplierType');
+    this.addFormInput('paymentTerms');
   } else {
     const changeType = document.getElementById('changeType');
     this.displayChangeTypeForm();
-    this.addFormInput(this.data.changeType.options[0]);
-    this.addFormInput('Supplier Number');
+    this.addFormInput('activeStatus'); // TO BE FIXED
+    this.addFormInput('supplierNumber');
   }
 };
 
 // Update form for selected change type
 UI.prototype.displayChangeTypeForm = function() {
-  const header = document.getElementById('headerDiv');
+  const header = document.getElementById('formHeaderDiv');
   const div = document.createElement('div');
   div.setAttribute('class', 'form-group col-md-3');
   div.setAttribute('id', 'changeTypeDiv');
@@ -63,25 +63,27 @@ UI.prototype.displayChangeTypeForm = function() {
   // If select input add options
 
   let option1;
-  this.data.changeType.options.forEach(function(e) {
+  for (let [key, value] of Object.entries(this.data.changeType.options) ) {
     option1 = document.createElement('option');
-    option1.setAttribute('value', e);
-    option1.innerHTML = e;
+    option1.setAttribute('value', key);
+    option1.innerHTML = value;
     changeTypeInput.appendChild(option1);
-  });
+  }
 
   // Display input and label
   div.appendChild(changeTypeLabel);
   div.appendChild(changeTypeInput);
   header.appendChild(div);
-  document.getElementById('changeType').addEventListener('change', this.updateFormRequestType, false);
+  document
+    .getElementById('changeType')
+    .addEventListener('change', this.updateFormRequestType, false);
 };
 
 UI.prototype.updateFormRequestType = function() {
-  const formDetailDiv = document.getElementById('formDetailDiv');  
+  const formDetailDiv = document.getElementById('formDetailDiv');
   while (formDetailDiv.firstChild) {
     formDetailDiv.removeChild(formDetailDiv.firstChild);
-  }  
+  }
   const userSelectedType = document.getElementById('changeType');
   UI.prototype.addFormInput(userSelectedType.value);
 };
@@ -95,27 +97,28 @@ UI.prototype.clearFileList = function() {
 };
 
 UI.prototype.formReset = function() {
-  const numberDiv = document.getElementById('supplierNumberDiv');
+  const numberDiv = document.getElementById('supplierNumber');
   const typeDiv = document.getElementById('changeTypeDiv');
   const formDetailDiv = document.getElementById('formDetailDiv');
   // Clear any prior selected files
-  while (numberDiv.firstChild) {
-    numberDiv.removeChild(numberDiv.firstChild);
-  }
   while (formDetailDiv.firstChild) {
     formDetailDiv.removeChild(formDetailDiv.firstChild);
   }
   if (typeDiv) {
     typeDiv.remove();
   }
+  if (numberDiv) {
+    numberDiv.parentNode.remove();
+  }
 };
 
 UI.prototype.addFormInput = function(requestType) {
   const divId =
-    requestType === 'Supplier Number' ? 'supplierNumberDiv' : 'formDetailDiv';
+    requestType === 'supplierNumber' ? 'supplierHeaderDiv' : 'formDetailDiv';
   const dom = document.getElementById(divId);
+  const divSize = requestType === 'supplierNumber' ? 'col-md-2' : 'col-md-4';
   const div = document.createElement('div');
-  div.setAttribute('class', 'form-group col-md-4');
+  div.setAttribute('class', 'form-group ' + divSize);
   const elementType = this.data[requestType].hasOwnProperty('options')
     ? 'select'
     : 'input';
@@ -148,22 +151,22 @@ UI.prototype.addFormInput = function(requestType) {
 UI.prototype.data = {
   changeType: {
     label: 'Change Type',
-    options: [
-      'Active Status',
-      'Supplier Type',
-      'Name Change',
-      'Remit Address',
-      'Payment Terms',
-      'Payment Type',
-      'Other'
-    ]
+    options: {
+      activeStatus: 'Active Status',
+      supplierType: 'Supplier Type',
+      nameChange: 'Name Change',
+      remitAddress: 'Remit Address',
+      paymentTerms: 'Payment Terms',
+      paymentType: 'Payment Type',
+      other: 'Other'
+    }
   },
-  'Supplier Number': { label: 'Supplier Number' },
-  'Active Status': {
+  'supplierNumber': { label: 'Supplier Number' },
+  'activeStatus': {
     label: 'Change Supplier to:',
     options: ['Active', 'Inactive']
   },
-  'Supplier Type': {
+  'supplierType': {
     label: 'Supplier Type',
     options: [
       'Production (Certified)',
@@ -174,16 +177,16 @@ UI.prototype.data = {
       'Other'
     ]
   },
-  'Name Change': { label: 'New Name' },
-  'Remit Address': { label: 'New Remit Address' },
-  'Payment Terms': {
+  'nameChange': { label: 'New Name' },
+  'remitAddress': { label: 'New Remit Address' },
+  'paymentTerms': {
     label: 'Supplier Terms:',
     options: ['Due Upon Receipt', 'N45', 'N30', 'N10']
   },
-  'Payment Type': {
+  'paymentType': {
     label: 'Payment Type:',
     options: ['ACH', 'Paymode Check', 'On-Site Check', 'Wire']
   },
-  Other: { label: 'Change Description' }
+  other: { label: 'Change Description' }
 };
 //</script>
