@@ -44,7 +44,7 @@ function handleFormChange() {
   ui.formTypeChange(); 
 }
 
-function handleFileSelect() {
+function handleFileSelect(e) {
   // Check if file was selected
   if (!e.target.files) return;
 
