@@ -116,7 +116,7 @@ UI.prototype.addFormInput = function(requestType) {
   const divId =
     requestType === 'supplierNumber' ? 'supplierHeaderDiv' : 'formDetailDiv';
   const dom = document.getElementById(divId);
-  const divSize = requestType === 'supplierNumber' ? 'col-md-2' : 'col-md-4';
+  const divSize = requestType === 'supplierNumber' ? 'col-md-2' : 'col-md-3';
   const div = document.createElement('div');
   div.setAttribute('class', 'form-group ' + divSize);
   const elementType = this.data[requestType].hasOwnProperty('options')
